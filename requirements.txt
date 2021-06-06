@@ -1,0 +1,5 @@
+gunicorn
+dj-database-url
+Django
+psycopg2-binary
+whitenoise

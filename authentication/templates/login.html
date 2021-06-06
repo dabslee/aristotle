@@ -1,0 +1,10 @@
+{% block content %}
+  <h1>Login</h1>
+  <form method="post">
+    {% csrf_token %}
+    <p>Username: {{ form.username }}</p>
+    <p>Password: {{ form.password }}</p>
+    <br>
+    <button class="fancyButton" type="submit">Login</button>
+  </form>
+{% endblock %}

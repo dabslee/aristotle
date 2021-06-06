@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include "navbar.html" %}
+<h1>Write a Post</h1>
+<form name="myForm" action="{% url 'forum:write_post' %}" method="POST">
+    {% csrf_token %}
+    <p>Post title: {{ form.title }}</p>
+    <p>Post content: (min length 2000 char, max 20000)<br>{{ form.content }}</p>
+    <input type="submit" class="fancyButton" value="Submit" onclick="return checkForm();" style="font-size: large">
+</form>
+{% endblock %}

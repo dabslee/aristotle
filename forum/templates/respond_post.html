@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include "navbar.html" %}
+<h1>Respond to a Post</h1>
+<p><b>Responding to <a href="{% url 'forum:post' parent.id %}">"{{ parent.title }}"</a> by <a href="{% url 'forum:account' parent.author %}">{{ parent.author }}</a></b></p>
+<form name="myForm" action="{% url 'forum:respond_post' parent.id %}" method="POST">
+    {% csrf_token %}
+    <p>Post title: {{ form.title }}</p>
+    <p>Post content: (min length 2000 char, max 20000)<br>{{ form.content }}</p>
+    <input type="submit" class="fancyButton" value="Submit" onclick="return checkForm();" style="font-size: large">
+</form>
+{% endblock %}
