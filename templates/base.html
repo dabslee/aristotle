@@ -7,22 +7,32 @@
     </head>
     <body>
         <a href="{% url 'home' %}">
-            <div id=pagehead style="display:flex; flex-direction: row; align-items: center;">
-                aristotle
-                <img src="{% static 'img/logo.png' %}" style="width:50px; margin-left: 20px;">
+            <div id=pagehead>
+                <div style="display:flex; flex-direction: row; align-items: center;">
+                    aristotle
+                    <img src="{% static 'img/logo.png' %}" style="width:50px; margin-left: 20px;">
+                </div>
+                <div style="font-weight: normal">
+                    {{selected_course.name}}
+                </div>
             </div>
         </a>
         <div id="fullcontainer">
+            {% if username %}
             <div id="navbar">
                 <ul>
                     <a href="{% url 'home' %}"><li>Home</li></a>
-                    <a href="{% url 'home' %}"><li>Courses</li></a>
+                    <a href="{% url 'forum:courses' %}"><li>Courses</li></a>
                     <a href="{% url 'home' %}"><li>Students</li></a>
                     <a href="{% url 'home' %}"><li>Modules</li></a>
                     <a href="{% url 'home' %}"><li>Assignments</li></a>
+                </ul>
+                <ul>
+                    <li>Logged in as <b>{{username}}</b></li>
                     <a href="{% url 'authentication:logout' %}"><li>Log Out</li></a>
                 </ul>
             </div>
+            {% endif %}
             <div id="content">
                 {% block content %}
                 {% endblock %}

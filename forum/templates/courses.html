@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Courses</h2>
+<p>
+    View your courses below! Click on the course title to select that course.
+</p>
+{% if selected_course %}
+<p>Your current course selection is <b>{{selected_course.name}}</b>.</p>
+{% endif %}
+{% for course in courses %}
+<a href="{% url 'forum:setcourse' course.id %}"><div class="cutebox">{{course.name}}</div></a>
+{% endfor %}
+{% endblock %}

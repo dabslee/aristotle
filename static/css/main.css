@@ -21,6 +21,9 @@ body {
     font-weight: bold;
     padding: var(--main-margin);
     padding-bottom: 20px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
 }
 
 #fullcontainer {
@@ -48,10 +51,12 @@ body {
 }
 #navbar li {
     padding: 10px 20px;
-    cursor: pointer;
     color: black;
 }
-#navbar li:hover {
+#navbar a li {
+    cursor: pointer;
+}
+#navbar a li:hover {
     background-color: var(--dark-fog-gray);
 }
 
@@ -85,4 +90,7 @@ a:hover {
     border-radius: 10px;
     background-color: var(--light-aristotle-blue);
     padding: 10px 30px;
+}
+.cutebox:hover {
+    opacity: 0.7;
 }
