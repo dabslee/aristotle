@@ -1,5 +1,6 @@
+{% extends 'base.html' %}
 {% block content %}
-  <h1>Sign up</h1>
+  <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
     <p>Username: {{ form.username }}</p>
@@ -21,6 +22,6 @@
     {% endif %}
     </div>
     <br>
-    <button class="fancyButton" type="submit">Sign up</button>
+    <button type="submit">Sign up</button>
   </form>
 {% endblock %}

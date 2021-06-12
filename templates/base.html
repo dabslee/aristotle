@@ -1,0 +1,27 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>aristotle</title>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+    <body>
+        <a href="{% url 'home' %}"><div id=pagehead>aristotle</div></a>
+        <div id="fullcontainer">
+            <div id="navbar">
+                <ul>
+                    <a href="{% url 'home' %}"><li>Home</li></a>
+                    <a href="{% url 'home' %}"><li>Courses</li></a>
+                    <a href="{% url 'home' %}"><li>Students</li></a>
+                    <a href="{% url 'home' %}"><li>Modules</li></a>
+                    <a href="{% url 'home' %}"><li>Assignments</li></a>
+                    <a href="{% url 'authentication:logout' %}"><li>Log Out</li></a>
+                </ul>
+            </div>
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
