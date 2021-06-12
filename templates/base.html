@@ -6,7 +6,12 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
     </head>
     <body>
-        <a href="{% url 'home' %}"><div id=pagehead>aristotle</div></a>
+        <a href="{% url 'home' %}">
+            <div id=pagehead style="display:flex; flex-direction: row; align-items: center;">
+                aristotle
+                <img src="{% static 'img/logo.png' %}" style="width:50px; margin-left: 20px;">
+            </div>
+        </a>
         <div id="fullcontainer">
             <div id="navbar">
                 <ul>
