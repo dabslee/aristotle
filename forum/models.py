@@ -27,7 +27,7 @@ class Assignment(models.Model):
     title = models.CharField(max_length=100)
     start_datetime = models.DateTimeField(null=True, blank=True)
     end_datetime = models.DateTimeField(null=True, blank=True)
-    description = models.CharField(max_length=10000, blank=True)
+    description = models.TextField(max_length=10000, blank=True)
     total_points = models.IntegerField(null=True, blank=True)
 
 class Submission(models.Model):

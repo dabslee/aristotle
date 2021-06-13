@@ -3,7 +3,7 @@ from django.contrib.auth.models import Permission, User
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Course
+from .models import Assignment, Course
 from . import forms
 
 def alwaysContext(request):
@@ -65,3 +65,14 @@ def createcourse(request):
         context = alwaysContext(request)
         context["form"] = forms.CreateCourseForm()
         return render(request, "createcourse.html", context)
+
+def assignments(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    context = alwaysContext(request)
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    context["assignments"] = Assignment.objects.filter(course=course)
+    if (course.owner == request.user):
+        return render(request, "assignments_teacher.html", context)
+    else:
+        return render(request, "assignments_student.html", context)

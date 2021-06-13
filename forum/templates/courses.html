@@ -2,9 +2,7 @@
 
 {% block content %}
 <h2>Your Courses</h2>
-<p>
-    View your courses below! Click on the course title to select that course.
-</p>
+{% if courses|length > 0 %}<p>View your courses below! Click on the course title to select that course.</p>{% else %}<p>No courses yet!</p>{% endif %}
 {% if selected_course %}
 <p>Your current course selection is <b>{{selected_course.name}}</b>.</p>
 {% endif %}

@@ -78,7 +78,7 @@ a:hover {
     background-color: var(--aristotle-blue);
     padding: 10px;
     min-width: 100px;
-    width: min-content;
+    width: max-content;
     text-align: center;
     cursor: pointer;
 }
