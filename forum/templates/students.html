@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Students</h2>
+{% if selected_course %}
+<p>The students in <b>{{selected_course.name}}</b>. Click on the student to view their grades.</p>
+{% endif %}
+{% for student in students %}
+<a href="#"><div class="cutebox">{{student.username}}</div></a>
+{% endfor %}
+{% endblock %}

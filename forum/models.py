@@ -7,9 +7,9 @@ class Course(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='owner'
+        related_name='course_of_owner'
     )
     students = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name='student'
+        related_name='course_of_student'
     )

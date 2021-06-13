@@ -22,7 +22,7 @@ def courses(request):
     if not request.user.is_authenticated:
         return redirect('home')
     context = alwaysContext(request)
-    context["courses"] = Course.objects.filter(owner=request.user)
+    context["courses"] = Course.objects.filter(Q(owner=request.user) | Q(students=request.user)).distinct()
     return render(request, "courses.html", context)
 
 def setcourse(request, course_id):
@@ -30,3 +30,11 @@ def setcourse(request, course_id):
         return redirect('home')
     request.session['selected_course_id'] = course_id
     return redirect("forum:courses")
+
+def students(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    context = alwaysContext(request)
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    context["students"] = User.objects.filter(course_of_student=course)
+    return render(request, "students.html", context)
