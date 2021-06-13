@@ -1,22 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-    <h2>Assignment: {{assignment.title}}</h2>
-    <div class="button">Edit assignment</div>
-</div>
-<p><i><b>Start date: </b>{{assignment.start_datetime}}</i><br>
-    <i><b>End date: </b>{{assignment.end_datetime}}</i></p>
-<h3>Description:</h3>
-<p>{{assignment.description |linebreaksbr |safe}}</p>
-<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-    <h3>Submissions:</h3>
-    <a href="{% url 'forum:newsubmission' assignment.id %}"><div class="button">New submission</div></a>
-</div>
-{% for submission in submissions %}
-<div class="cutebox">
-    <p><b>{{submission.student}}</b> - <i>{{submission.submit_datetime}}</i></p>
-    <p>{{submission.details}}</p>
-</div>
-{% endfor %}
+<form action="{% url 'forum:assignmentdetails' assignment.id %}" method="POST">
+    {% csrf_token %}
+    <h2>Assignment: <input name="title" type="text" value="{{assignment.title}}"></input></h2>
+    <p><i>
+        <b>Start date: </b><input name="start" type="datetime-local" value="{{assignment.start_datetime|date:'Y-m-d\Th:m'}}"></input><br>
+        <b>End date: </b><input name="end" type="datetime-local" value="{{assignment.end_datetime|date:'Y-m-d\Th:m'}}"></input><br>
+    </i></p>
+    <h3>Description:</h3>
+    <textarea name="description">{{assignment.description}}</textarea>
+    <br><br>
+    <input type="submit" value="Save changes">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--aristotle-blue)">{% if savedmessage %}{{savedmessage}}{% endif %}</span>
+</form>
+<h3>Students:</h3>
 {% endblock %}

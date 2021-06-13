@@ -28,6 +28,9 @@ body {
     display: flex;
     flex-direction: row;
 }
+a {
+    text-decoration: none;
+}
 
 #fullcontainer {
     display:flex;
@@ -66,17 +69,36 @@ h2 {
     color: var(--aristotle-blue);
 }
 
-a {
+#fullcontainer a {
     color: var(--aristotle-blue);
     text-decoration: none;
 }
-a:hover {
+#fullcontainer a:hover {
     opacity: 0.7;
 }
 
+input {
+    font-family: 'Nunito';
+    font-size: medium;
+    padding: 2px;
+}
 textarea {
-    width: 80%;
-    height: 80%;
+    font-family: 'Nunito';
+    min-height: 50%;
+    min-width: 80%;
+    font-size: medium;
+    padding: 10px;
+}
+input[type=submit]{
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: var(--aristotle-blue);
+    color: white;
+    cursor: pointer;
+}
+input[type=submit]:hover{
+    opacity: 0.7;
 }
 
 .button {

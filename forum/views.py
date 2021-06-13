@@ -7,6 +7,12 @@ from django.http import HttpResponseRedirect
 from .models import Assignment, Course, Submission
 from . import forms
 
+import datetime
+
+def dateConvert(date_in):
+    date_processing = date_in.replace('T', '-').replace(':', '-').split('-')
+    date_processing = [int(v) for v in date_processing]
+    return datetime.datetime(*date_processing)
 def alwaysContext(request):
     return {
         "username": request.user.username,
@@ -88,6 +94,15 @@ def assignmentdetails(request, assignment_id):
     assignment = Assignment.objects.get(id=assignment_id)
     if Course.objects.filter(id=request.session.get('selected_course_id')).first() != assignment.course:
         return redirect('home')
+    
+    if request.method == "POST":
+        assignment.title = request.POST['title']
+        assignment.start_datetime = dateConvert(request.POST['start'])
+        assignment.end_datetime = dateConvert(request.POST['end'])
+        assignment.description = request.POST['description']
+        assignment.save()
+        context["savedmessage"] = "Changes saved."
+    
     context["assignment"] = assignment
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     if (course.owner == request.user):

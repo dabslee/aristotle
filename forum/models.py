@@ -28,7 +28,20 @@ class Assignment(models.Model):
     start_datetime = models.DateTimeField(null=True, blank=True)
     end_datetime = models.DateTimeField(null=True, blank=True)
     description = models.TextField(max_length=10000, blank=True)
-    total_points = models.IntegerField(null=True, blank=True)
+    total_points = models.FloatField(null=True, blank=True)
+
+class Grade(models.Model):
+    student = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grade_of_student"
+    )
+    assignment = models.ForeignKey(
+        Assignment,
+        on_delete=models.CASCADE,
+        related_name="grade_of_assignment"
+    )
+    earned_points = models.FloatField()
 
 class Submission(models.Model):
     student = models.ForeignKey(
