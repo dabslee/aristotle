@@ -19,5 +19,6 @@
     {% csrf_token %}
     {{form.uuid}}
     <input type="submit" value="Submit">
+    {% if error %}<br><span style="color:red">{{error}}</span>{% endif %}
 </form>
 {% endblock %}

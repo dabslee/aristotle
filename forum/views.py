@@ -22,6 +22,7 @@ def index(request):
 def courses(request):
     if not request.user.is_authenticated:
         return redirect('home')
+    context = alwaysContext(request)
     if request.method == 'POST':
         form = forms.JoinCourseForm(request.POST)
         if form.is_valid():
@@ -29,11 +30,11 @@ def courses(request):
             course = Course.objects.get(uuid=uuid)
             course.students.add(request.user)
             return redirect("forum:courses")
-    else:
-        context = alwaysContext(request)
-        context["courses"] = Course.objects.filter(Q(owner=request.user) | Q(students=request.user)).distinct()
-        context["form"] = forms.JoinCourseForm()
-        return render(request, "courses.html", context)
+        else:
+            context["error"] = "Course not found."
+    context["courses"] = Course.objects.filter(Q(owner=request.user) | Q(students=request.user)).distinct()
+    context["form"] = forms.JoinCourseForm()
+    return render(request, "courses.html", context)
 
 def setcourse(request, course_id):
     if not request.user.is_authenticated:
