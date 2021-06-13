@@ -5,6 +5,7 @@
     --light-aristotle-blue: #daf1ff;
     --fog-gray: #c4d3dd;
     --dark-fog-gray: #a0b5c4;
+    --extra-dark-fog-gray: #7c8b96;
     --main-font: 'Nunito';
     --main-margin: 50px;
 }
@@ -13,7 +14,7 @@ body {
     font-family: var(--main-font);
     margin: 0px;
     display: flex;
-    min-height: 100vh;
+    height: 100%;
     flex-direction: column;
 }
 
@@ -33,14 +34,24 @@ a {
 }
 
 #fullcontainer {
-    display:flex;
+    display: flex;
     flex-direction: row;
     flex: 1;
+}
+
+#pagefoot {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: var(--extra-dark-fog-gray);
 }
 
 #content {
     margin: var(--main-margin);
     width: 100%;
+    height: fit-content;
 }
 
 #navbar {
@@ -80,14 +91,26 @@ h2 {
 input {
     font-family: 'Nunito';
     font-size: medium;
-    padding: 2px;
+    padding: 5px;
+    border: solid 1px var(--aristotle-blue);
+    margin: 5px;
+    border-radius: 5px;
+}
+input:focus {
+    outline: none;
 }
 textarea {
     font-family: 'Nunito';
-    min-height: 50%;
-    min-width: 80%;
+    min-height: 50vh;
+    min-width: 70vw;
     font-size: medium;
     padding: 10px;
+    border: solid 1px var(--aristotle-blue);
+    margin: 5px;
+    border-radius: 5px;
+}
+textarea:focus {
+    outline: none;
 }
 input[type=submit]{
     border: none;
@@ -99,6 +122,24 @@ input[type=submit]{
 }
 input[type=submit]:hover{
     opacity: 0.7;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+tr:hover {
+    background-color: var(--light-aristotle-blue);
+}
+td, th {
+    border: solid 1px var(--aristotle-blue);
+    padding: 10px;
+}
+th {
+    background-color: var(--aristotle-blue);
+    color: white;
+    text-align: left;
 }
 
 .button {
@@ -124,3 +165,4 @@ input[type=submit]:hover{
 a .cutebox:hover {
     opacity: 0.7;
 }
+

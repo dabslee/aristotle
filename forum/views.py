@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 
-from .models import Assignment, Course, Submission
+from .models import Assignment, Course, Submission, Grade
 from . import forms
 
 import datetime
@@ -36,9 +36,9 @@ def courses(request):
             uuid=form.cleaned_data['uuid']
             course = Course.objects.get(uuid=uuid)
             if (course.owner == request.user):
-                course.students.add(request.user)
                 context["error"] = "You are the owner of this course!"
             else:
+                course.students.add(request.user)
                 return redirect("forum:courses")
         else:
             context["error"] = "Course not found."
@@ -87,6 +87,17 @@ def assignments(request):
     else:
         return render(request, "assignments_student.html", context)
 
+class SubmissionRow():
+    def __init__(self, student, assignment):
+        self.username = student.username
+        self.nosubmissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student)).count()
+        self.grade = Grade.objects.filter(Q(assignment=assignment) & Q(student=student))
+        if self.grade.count() > 0:
+            self.grade = self.grade.first()
+            self.percentgrade = self.grade * 100 / assignment.total_points
+        else:
+            self.grade = "--"
+            self.percentgrade = "--"
 def assignmentdetails(request, assignment_id):
     if not request.user.is_authenticated:
         return redirect('home')
@@ -106,7 +117,9 @@ def assignmentdetails(request, assignment_id):
     context["assignment"] = assignment
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     if (course.owner == request.user):
-        context["submissions"] = Submission.objects.filter(assignment=assignment).order_by('-submit_datetime')
+        context["students"] = []
+        for student in User.objects.filter(course_of_student=course):
+            context["students"].append(SubmissionRow(student, assignment))
         return render(request, "assignmentdetails_teacher.html", context)
     else:
         context["submissions"] = Submission.objects.filter(Q(assignment=assignment) & Q(student=request.user)).order_by('-submit_datetime')

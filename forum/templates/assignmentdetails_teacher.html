@@ -8,10 +8,28 @@
         <b>Start date: </b><input name="start" type="datetime-local" value="{{assignment.start_datetime|date:'Y-m-d\Th:m'}}"></input><br>
         <b>End date: </b><input name="end" type="datetime-local" value="{{assignment.end_datetime|date:'Y-m-d\Th:m'}}"></input><br>
     </i></p>
-    <h3>Description:</h3>
+    <p><b><i>Description:</i></b></p>
     <textarea name="description">{{assignment.description}}</textarea>
-    <br><br>
+    <br>
     <input type="submit" value="Save changes">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--aristotle-blue)">{% if savedmessage %}{{savedmessage}}{% endif %}</span>
 </form>
-<h3>Students:</h3>
+<h2>Review submissions:</h2>
+<table>
+    <tr>
+        <th>Student</th>
+        <th># Submissions</th>
+        <th>Grade</th>
+        <th>Percent grade</th>
+        <th>Review submissions</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+        <td>{{student.username}}</td>
+        <td>{{student.nosubmissions}}</td>
+        <td>{{student.grade}}</td>
+        <td>{{student.percentgrade}}</td>
+        <td><div class="button">Review submission</div></td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
