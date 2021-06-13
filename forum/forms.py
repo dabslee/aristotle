@@ -6,3 +6,6 @@ class CreateCourseForm(forms.Form):
 
 class JoinCourseForm(forms.Form):
     uuid = forms.UUIDField()
+
+class NewSubmission(forms.Form):
+    details = forms.CharField(max_length=10000, widget=forms.Textarea)

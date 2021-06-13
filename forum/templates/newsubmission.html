@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>New submission for "{{assignment.title}}"</h2>
+<form action="{% url 'forum:newsubmission' assignment.id %}" method="post">
+    {% csrf_token %}
+    Text submission:<br>
+    {{form.details}}<br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

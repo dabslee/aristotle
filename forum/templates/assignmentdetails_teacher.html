@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <h2>Assignment: {{assignment.title}}</h2>
+    <div class="button">Edit assignment</div>
+</div>
+<p><i><b>Start date: </b>{{assignment.start_datetime}}</i><br>
+    <i><b>End date: </b>{{assignment.end_datetime}}</i></p>
+<h3>Description:</h3>
+<p>{{assignment.description |linebreaksbr |safe}}</p>
+<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <h3>Submissions:</h3>
+    <a href="{% url 'forum:newsubmission' assignment.id %}"><div class="button">New submission</div></a>
+</div>
+{% for submission in submissions %}
+<div class="cutebox">
+    <p><b>{{submission.student}}</b> - <i>{{submission.submit_datetime}}</i></p>
+    <p>{{submission.details}}</p>
+</div>
+{% endfor %}
+{% endblock %}

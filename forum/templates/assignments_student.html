@@ -5,5 +5,5 @@
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
 </div>
-{% for assignment in assignments %}<a href="#"><div class="cutebox">{{assignment.title}}</div></a>{% endfor %}
+{% for assignment in assignments %}<a href="{% url 'forum:assignmentdetails' assignment.id %}"><div class="cutebox">{{assignment.title}}</div></a>{% endfor %}
 {% endblock %}

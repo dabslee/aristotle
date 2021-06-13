@@ -41,4 +41,5 @@ class Submission(models.Model):
         on_delete=models.CASCADE,
         related_name="submission_of_assignment"
     )
-    earned_points = models.IntegerField(null=True, blank=True)
+    details = models.TextField(max_length=10000, blank=True)
+    submit_datetime = models.DateTimeField(auto_now_add=True, blank=True)

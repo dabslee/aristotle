@@ -12,6 +12,9 @@
 body {
     font-family: var(--main-font);
     margin: 0px;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 #pagehead {
@@ -29,8 +32,7 @@ body {
 #fullcontainer {
     display:flex;
     flex-direction: row;
-    height: calc(100vh - 120px);
-    width: 100%;
+    flex: 1;
 }
 
 #content {
@@ -70,6 +72,11 @@ a {
 }
 a:hover {
     opacity: 0.7;
+}
+
+textarea {
+    width: 80%;
+    height: 80%;
 }
 
 .button {
