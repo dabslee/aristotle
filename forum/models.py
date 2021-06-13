@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+import uuid
 
 # Create your models here.
 class Course(models.Model):
@@ -13,13 +14,20 @@ class Course(models.Model):
         settings.AUTH_USER_MODEL,
         related_name='course_of_student'
     )
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False
+    )
 
 class Assignment(models.Model):
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE
+    )
     title = models.CharField(max_length=100)
-    start_datetime = models.DateTimeField()
-    end_datetime = models.DateTimeField()
-    description = models.CharField(max_length=10000)
+    start_datetime = models.DateTimeField(null=True, blank=True)
+    end_datetime = models.DateTimeField(null=True, blank=True)
+    description = models.CharField(max_length=10000, blank=True)
     total_points = models.IntegerField(null=True, blank=True)
 
 class Submission(models.Model):

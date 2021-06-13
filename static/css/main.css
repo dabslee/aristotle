@@ -29,7 +29,7 @@ body {
 #fullcontainer {
     display:flex;
     flex-direction: row;
-    height: calc(100vh - 113px);
+    height: calc(100vh - 120px);
     width: 100%;
 }
 
@@ -92,6 +92,6 @@ a:hover {
     padding: 10px 30px;
     margin: 10px;
 }
-.cutebox:hover {
+a .cutebox:hover {
     opacity: 0.7;
 }

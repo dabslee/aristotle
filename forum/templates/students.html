@@ -2,10 +2,8 @@
 
 {% block content %}
 <h2>Students</h2>
-{% if selected_course %}
-<p>The students in <b>{{selected_course.name}}</b>. Click on the student to view their grades.</p>
-{% endif %}
-{% for student in students %}
-<a href="#"><div class="cutebox">{{student.username}}</div></a>
-{% endfor %}
+{% if students|length > 0 %}<p>The students in <b>{{selected_course.name}}</b>. Click on the student to view their grades.</p>{% endif %}
+{% for student in students %}<a href="#"><div class="cutebox">{{student.username}}</div></a>{% endfor %}
+<p>To invite a student to join this course (<b>{{selected_course.name}}</b>), ask them to enter the following UUID on their "Courses" page.:</p>
+<div class="cutebox" style="user-select: all;"><b>{{selected_course.uuid}}</b></div>
 {% endblock %}

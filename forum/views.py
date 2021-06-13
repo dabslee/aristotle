@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Course
+from . import forms
 
 def alwaysContext(request):
     return {
@@ -21,9 +22,18 @@ def index(request):
 def courses(request):
     if not request.user.is_authenticated:
         return redirect('home')
-    context = alwaysContext(request)
-    context["courses"] = Course.objects.filter(Q(owner=request.user) | Q(students=request.user)).distinct()
-    return render(request, "courses.html", context)
+    if request.method == 'POST':
+        form = forms.JoinCourseForm(request.POST)
+        if form.is_valid():
+            uuid=form.cleaned_data['uuid']
+            course = Course.objects.get(uuid=uuid)
+            course.students.add(request.user)
+            return redirect("forum:courses")
+    else:
+        context = alwaysContext(request)
+        context["courses"] = Course.objects.filter(Q(owner=request.user) | Q(students=request.user)).distinct()
+        context["form"] = forms.JoinCourseForm()
+        return render(request, "courses.html", context)
 
 def setcourse(request, course_id):
     if not request.user.is_authenticated:
@@ -38,3 +48,19 @@ def students(request):
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     context["students"] = User.objects.filter(course_of_student=course)
     return render(request, "students.html", context)
+
+def createcourse(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    if request.method == 'POST':
+        form = forms.CreateCourseForm(request.POST)
+        if form.is_valid():
+            Course.objects.create(
+                name=form.cleaned_data['name'],
+                owner=request.user
+            )
+            return redirect("forum:courses")
+    else:
+        context = alwaysContext(request)
+        context["form"] = forms.CreateCourseForm()
+        return render(request, "createcourse.html", context)

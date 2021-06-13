@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Courses</h2>
+<h2>Your Courses</h2>
 <p>
     View your courses below! Click on the course title to select that course.
 </p>
@@ -11,4 +11,13 @@
 {% for course in courses %}
 <a href="{% url 'forum:setcourse' course.id %}"><div class="cutebox">{{course.name}}</div></a>
 {% endfor %}
+<a href="{% url 'forum:createcourse' %}"><div class="cutebox" style="background-color: var(--fog-gray);">&#8853;&nbsp;&nbsp;&nbsp;&nbsp;Create a new course</div></a>
+
+<h2>Join a Course</h2>
+<p>Join a course by entering its UUID:</p>
+<form action="#" method="POST">
+    {% csrf_token %}
+    {{form.uuid}}
+    <input type="submit" value="Submit">
+</form>
 {% endblock %}
