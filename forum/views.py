@@ -130,7 +130,7 @@ def assignmentdetails(request, assignment_id):
     else:
         context["grade"] = Grade.objects.filter(Q(assignment_id=assignment_id) & Q(student=request.user))
         if context["grade"].count() == 0:
-            context["grade"] = Grade.objects.create(assignment=context["assignment"], student=context["student"])
+            context["grade"] = Grade.objects.create(assignment=context["assignment"], student=request.user)
         else:
             context["grade"] = context["grade"].first()
         context["submissions"] = Submission.objects.filter(Q(assignment=assignment) & Q(student=request.user)).order_by('-submit_datetime')
