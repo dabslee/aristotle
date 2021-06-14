@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.models import Permission, User
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 from .models import Assignment, Course, Submission, Grade
 from . import forms
@@ -93,11 +93,12 @@ class SubmissionRow():
         self.nosubmissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student)).count()
         self.grade = Grade.objects.filter(Q(assignment=assignment) & Q(student=student))
         if self.grade.count() > 0:
-            self.grade = self.grade.first()
+            self.grade = self.grade.first().earned_points
             self.percentgrade = self.grade * 100 / assignment.total_points
         else:
             self.grade = "--"
             self.percentgrade = "--"
+        self.link = reverse("forum:viewsubmission", kwargs={"assignment_id":assignment.id, "student_id":student.id})
 def assignmentdetails(request, assignment_id):
     if not request.user.is_authenticated:
         return redirect('home')
@@ -111,6 +112,7 @@ def assignmentdetails(request, assignment_id):
         assignment.start_datetime = dateConvert(request.POST['start'])
         assignment.end_datetime = dateConvert(request.POST['end'])
         assignment.description = request.POST['description']
+        assignment.total_points = request.POST['points']
         assignment.save()
         context["savedmessage"] = "Changes saved."
     
@@ -145,3 +147,22 @@ def newsubmission(request, assignment_id):
         context["assignment"] = assignment
         context["form"] = forms.NewSubmission()
         return render(request, "newsubmission.html", context)
+
+def viewsubmission(request, assignment_id=None, student_id=None):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    context = alwaysContext(request)
+    context["assignment"] = Assignment.objects.filter(id=assignment_id).first()
+    context["student"] = User.objects.filter(id=student_id).first()
+    context["grade"] = Grade.objects.filter(Q(assignment_id=assignment_id) & Q(student_id=student_id))
+    if context["grade"].count() == 0:
+        context["grade"] = Grade.objects.create(assignment=context["assignment"], student=context["student"])
+    else:
+        context["grade"] = context["grade"].first()
+    if request.method == "POST":
+        context["grade"].earned_points = request.POST['grade']
+        context["grade"].feedback = request.POST['feedback']
+        context["grade"].save()
+        context["savedmessage"] = "Feedback saved!"
+    context["submissions"] = Submission.objects.filter(Q(assignment_id=assignment_id) & Q(student_id=student_id)).order_by('-submit_datetime')
+    return render(request, "viewsubmission.html", context)

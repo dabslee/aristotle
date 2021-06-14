@@ -41,7 +41,8 @@ class Grade(models.Model):
         on_delete=models.CASCADE,
         related_name="grade_of_assignment"
     )
-    earned_points = models.FloatField()
+    earned_points = models.FloatField(null=True, blank=True)
+    feedback = models.CharField(max_length=1000, null=True, blank=True)
 
 class Submission(models.Model):
     student = models.ForeignKey(

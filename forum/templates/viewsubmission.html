@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Submissions by {{student.username}}</h2>
+{% for submission in submissions %}
+<div class="cutebox">
+    <p><i>{{submission.submit_datetime}}</i></p>
+    <p>{{submission.details}}</p>
+</div>
+{% endfor %}
+<h2>Grade and Feedback</h2>
+<form action="{% url 'forum:viewsubmission' assignment_id=assignment.id student_id=student.id %}" method="POST">
+    {% csrf_token %}
+    <b>Grade:</b><br><input type="number" name="grade" value="{{grade.earned_points}}"> / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}<br><br>
+    <b>Feedback:</b><br><textarea name="feedback" style="min-height:150px">{{grade.feedback}}</textarea><br>
+    <input type="submit" value="Save feedback">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--aristotle-blue)">{% if savedmessage %}{{savedmessage}}{% endif %}</span>
+</form>
+{% endblock %}

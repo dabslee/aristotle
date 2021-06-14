@@ -7,6 +7,7 @@
     <p><i>
         <b>Start date: </b><input name="start" type="datetime-local" value="{{assignment.start_datetime|date:'Y-m-d\Th:m'}}"></input><br>
         <b>End date: </b><input name="end" type="datetime-local" value="{{assignment.end_datetime|date:'Y-m-d\Th:m'}}"></input><br>
+        <b>Total points: </b><input name="points" type="number" value="{{assignment.total_points}}"></input><br>
     </i></p>
     <p><b><i>Description:</i></b></p>
     <textarea name="description">{{assignment.description}}</textarea>
@@ -26,9 +27,12 @@
     <tr>
         <td>{{student.username}}</td>
         <td>{{student.nosubmissions}}</td>
-        <td>{{student.grade}}</td>
-        <td>{{student.percentgrade}}</td>
-        <td><div class="button">Review submission</div></td>
+        <td>
+            {% if student.grade %}{{student.grade}}{% else %}--{% endif %}
+            / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}
+        </td>
+        <td>{{student.percentgrade}}%</td>
+        <td><a href="{{student.link}}"><div class="button">Review submission</div></a></td>
     </tr>
     {% endfor %}
 </table>
