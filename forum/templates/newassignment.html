@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create a new assignment</h2>
+<form action="{% url 'forum:newassignment' %}" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Title:</td>
+            <td>{{form.title}}</td>
+        </tr>
+        <tr>
+            <td>Start:</td>
+            <td>{{form.start_datetime}}</td>
+        </tr>
+        <tr>
+            <td>Deadline:</td>
+            <td>{{form.end_datetime}}</td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td>{{form.description}}</td>
+        </tr>
+        <tr>
+            <td>Total points:</td>
+            <td>{{form.total_points}}</td>
+        </tr>
+    </table>
+    <input type="submit" value="Submit">
+    <style>
+        input[type=text]{width:400px;}
+    </style>
+    <script>
+        document.getElementsByName("start_datetime")[0].type = "datetime-local";
+        document.getElementsByName("end_datetime")[0].type = "datetime-local";
+    </script>
+</form>
+{% endblock %}

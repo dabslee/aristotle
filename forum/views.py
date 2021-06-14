@@ -92,8 +92,12 @@ class SubmissionRow():
         self.username = student.username
         self.nosubmissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student)).count()
         self.grade = Grade.objects.filter(Q(assignment=assignment) & Q(student=student))
-        if self.grade.count() > 0:
-            self.grade = self.grade.first().earned_points
+        if self.grade.count() == 0:
+            self.grade = Grade.objects.create(assignment=assignment, student=student)
+        else:
+            self.grade = self.grade.first()
+        if self.grade.earned_points:
+            self.grade = self.grade.earned_points
             self.percentgrade = self.grade * 100 / assignment.total_points
         else:
             self.grade = "--"
@@ -124,6 +128,11 @@ def assignmentdetails(request, assignment_id):
             context["students"].append(SubmissionRow(student, assignment))
         return render(request, "assignmentdetails_teacher.html", context)
     else:
+        context["grade"] = Grade.objects.filter(Q(assignment_id=assignment_id) & Q(student=request.user))
+        if context["grade"].count() == 0:
+            context["grade"] = Grade.objects.create(assignment=context["assignment"], student=context["student"])
+        else:
+            context["grade"] = context["grade"].first()
         context["submissions"] = Submission.objects.filter(Q(assignment=assignment) & Q(student=request.user)).order_by('-submit_datetime')
         return render(request, "assignmentdetails_student.html", context)
 
@@ -166,3 +175,26 @@ def viewsubmission(request, assignment_id=None, student_id=None):
         context["savedmessage"] = "Feedback saved!"
     context["submissions"] = Submission.objects.filter(Q(assignment_id=assignment_id) & Q(student_id=student_id)).order_by('-submit_datetime')
     return render(request, "viewsubmission.html", context)
+
+def newassignment(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    context = alwaysContext(request)
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    if (course.owner != request.user):
+        return redirect('home')
+    if request.method == "POST":
+        form = forms.CreateAssignmentForm(request.POST)
+        if form.is_valid():
+            Assignment.objects.create(
+                title=form.cleaned_data['title'],
+                start_datetime=form.cleaned_data['start_datetime'],
+                end_datetime=form.cleaned_data['end_datetime'],
+                description=form.cleaned_data['description'],
+                total_points=form.cleaned_data['total_points'],
+                course=course
+            )
+            return HttpResponseRedirect(reverse("forum:assignments"))
+    else:
+        context["form"] = forms.CreateAssignmentForm()
+        return render(request, "newassignment.html", context)
