@@ -12,7 +12,8 @@ class Course(models.Model):
     )
     students = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name='course_of_student'
+        related_name='course_of_student',
+        blank=True
     )
     uuid = models.UUIDField(
         default=uuid.uuid4,
