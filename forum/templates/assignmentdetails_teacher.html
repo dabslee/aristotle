@@ -5,8 +5,8 @@
     {% csrf_token %}
     <h2>Assignment: <input name="title" type="text" value="{{assignment.title}}"></input></h2>
     <p><i>
-        <b>Start date: </b><input name="start" type="datetime-local" value="{{assignment.start_datetime|date:'Y-m-d\Th:m'}}"></input><br>
-        <b>End date: </b><input name="end" type="datetime-local" value="{{assignment.end_datetime|date:'Y-m-d\Th:m'}}"></input><br>
+        <b>Start date: </b><input name="start" type="datetime-local" value="{{assignment.start_datetime|date:'Y-m-d\Th:i'}}"></input><br>
+        <b>End date: </b><input name="end" type="datetime-local" value="{{assignment.end_datetime|date:'Y-m-d\Th:i'}}"></input><br>
         <b>Total points: </b><input name="points" type="number" value="{{assignment.total_points}}"></input><br>
     </i></p>
     <p><b><i>Description:</i></b></p>
