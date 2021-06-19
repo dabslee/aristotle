@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+tr:hover {
+    background-color: var(--light-aristotle-blue);
+}
+td, th {
+    border: solid 1px var(--aristotle-blue);
+    padding: 10px;
+}
+th {
+    background-color: var(--aristotle-blue);
+    color: white;
+    text-align: left;
+}

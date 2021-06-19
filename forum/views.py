@@ -84,7 +84,7 @@ def assignments(request):
         return redirect('home')
     context = alwaysContext(request)
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    context["assignments"] = Assignment.objects.filter(course=course)
+    context["assignments"] = Assignment.objects.filter(course=course).order_by("end_datetime")
     if (course.owner == request.user):
         return render(request, "assignments_teacher.html", context)
     else:
