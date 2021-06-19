@@ -15,7 +15,7 @@
         <th>Submitted</th>
     </tr>
     {% for assignment in assignments %}
-    <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer" class="{% if assignment.submitted %}submitted{% else %}not-submitted{% endif %}">
+    <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer" class="{% if assignment.submitted %}done{% else %}not-done{% endif %}">
         <td>{% if not assignment.submitted %}&#8226;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{assignment.title}}</td>
         <td>{% if assignment.start_datetime %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
         <td>{% if assignment.end_datetime %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
@@ -24,13 +24,13 @@
         <td>{% if assignment.submitted %}Yes{% else %}No{% endif %}</td>
     </tr>
     <style>
-        .submitted {
+        .done {
             background-color: var(--fog-gray)
         }
-        .submitted:hover {
+        .done:hover {
             background-color: var(--dark-fog-gray);
         }
-        .not-submitted {
+        .not-done {
             font-weight: bold; color: var(--aristotle-blue)
         }
     </style>

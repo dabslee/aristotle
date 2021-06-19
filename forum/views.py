@@ -79,7 +79,7 @@ def createcourse(request):
         context["form"] = forms.CreateCourseForm()
         return render(request, "createcourse.html", context)
 
-class AssignmentRow():
+class StudentAssignmentRow():
     def __init__(self, student, assignment):
         self.id=assignment.id
         self.title=assignment.title
@@ -93,18 +93,33 @@ class AssignmentRow():
         self.total_points=assignment.total_points
         submissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student))
         self.submitted= submissions.count() > 0 or self.earned_points != None
+class TeacherAssignmentRow():
+    def __init__(self, assignment, request):
+        self.id = assignment.id
+        self.title = assignment.title
+        self.start_datetime = assignment.start_datetime
+        self.end_datetime = assignment.end_datetime
+        self.submitted = 0
+        course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+        for student in User.objects.filter(course_of_student=course):
+            if Grade.objects.filter(student=student, assignment=assignment).count() > 0 or Submission.objects.filter(student=student, assignment=assignment).count() > 0:
+                self.submitted += 1
+        self.nostudents = User.objects.filter(course_of_student=course).count()
+        self.graded = Grade.objects.filter(Q(assignment=assignment) & ~Q(earned_points=None)).count()
 def assignments(request):
     if not request.user.is_authenticated:
         return redirect('home')
     context = alwaysContext(request)
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     if (course.owner == request.user):
-        context["assignments"] = Assignment.objects.filter(course=course).order_by("end_datetime")
+        context["assignments"] = []
+        for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
+            context["assignments"].append(TeacherAssignmentRow(assignment, request))
         return render(request, "assignments_teacher.html", context)
     else:
         assignments = []
         for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
-            assignments.append(AssignmentRow(request.user, assignment))
+            assignments.append(StudentAssignmentRow(request.user, assignment))
         context["assignments"] = assignments
         return render(request, "assignments_student.html", context)
 
@@ -119,7 +134,10 @@ class SubmissionRow():
             self.grade = self.grade.first()
         if self.grade.earned_points:
             self.grade = self.grade.earned_points
-            self.percentgrade = float(self.grade) * 100 / float(assignment.total_points)
+            if self.grade and assignment.total_points:
+                self.percentgrade = float(self.grade) * 100 / float(assignment.total_points)
+            else:
+                self.percentgrade = "--"
         else:
             self.grade = "--"
             self.percentgrade = "--"
