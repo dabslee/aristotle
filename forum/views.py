@@ -10,9 +10,12 @@ from . import forms
 import datetime
 
 def dateConvert(date_in):
-    date_processing = date_in.replace('T', '-').replace(':', '-').split('-')
-    date_processing = [int(v) for v in date_processing]
-    return datetime.datetime(*date_processing)
+    try:
+        date_processing = date_in.replace('T', '-').replace(':', '-').split('-')
+        date_processing = [int(v) for v in date_processing]
+        return datetime.datetime(*date_processing)
+    except ValueError:
+        return None
 def alwaysContext(request):
     return {
         "username": request.user.username,
@@ -116,7 +119,7 @@ def assignmentdetails(request, assignment_id):
         assignment.start_datetime = dateConvert(request.POST['start'])
         assignment.end_datetime = dateConvert(request.POST['end'])
         assignment.description = request.POST['description']
-        assignment.total_points = request.POST['points']
+        assignment.total_points = request.POST['points'] if request.POST['points']!="" else None
         assignment.save()
         context["savedmessage"] = "Changes saved."
     
