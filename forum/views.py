@@ -86,7 +86,8 @@ class AssignmentRow():
         self.start_datetime=assignment.start_datetime
         self.end_datetime=assignment.end_datetime
         grade = Grade.objects.filter(Q(assignment=assignment) & Q(student=student)).first()
-        self.earned_points=grade.earned_points
+        if grade:
+            self.earned_points=grade.earned_points
         self.total_points=assignment.total_points
         submissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student))
         self.submitted= submissions.count() > 0
