@@ -88,9 +88,11 @@ class AssignmentRow():
         grade = Grade.objects.filter(Q(assignment=assignment) & Q(student=student)).first()
         if grade:
             self.earned_points=grade.earned_points
+        else:
+            self.earned_points=None
         self.total_points=assignment.total_points
         submissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student))
-        self.submitted= submissions.count() > 0
+        self.submitted= submissions.count() > 0 or self.earned_points != None
 def assignments(request):
     if not request.user.is_authenticated:
         return redirect('home')

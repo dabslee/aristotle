@@ -15,14 +15,25 @@
         <th>Submitted</th>
     </tr>
     {% for assignment in assignments %}
-    <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer;">
-        <td>{{assignment.title}}</td>
-        <td>{{assignment.start_datetime}}</td>
-        <td>{{assignment.end_datetime}}</td>
-        <td>{{assignment.earned_points}}</td>
-        <td>{{assignment.submitted}}</td>
+    <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer" class="{% if assignment.submitted %}submitted{% else %}not-submitted{% endif %}">
+        <td>{% if not assignment.submitted %}&#8226;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{assignment.title}}</td>
+        <td>{% if assignment.start_datetime %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.end_datetime %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.earned_points %}{{assignment.earned_points}}{% else %}--{% endif %}
+            / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.submitted %}Yes{% else %}No{% endif %}</td>
     </tr>
-    
+    <style>
+        .submitted {
+            background-color: var(--fog-gray)
+        }
+        .submitted:hover {
+            background-color: var(--dark-fog-gray);
+        }
+        .not-submitted {
+            font-weight: bold; color: var(--aristotle-blue)
+        }
+    </style>
     {% endfor %}
 </table>
 <link rel="stylesheet" href="{% static 'css/table.css' %}">
