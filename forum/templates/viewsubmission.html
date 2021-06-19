@@ -15,7 +15,7 @@
 <form action="{% url 'forum:viewsubmission' assignment_id=assignment.id student_id=student.id %}" method="POST">
     {% csrf_token %}
     <b>Grade:</b><br><input type="number" name="grade" value="{{grade.earned_points}}"> / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}<br><br>
-    <b>Feedback:</b><br><textarea name="feedback" style="min-height:150px">{{grade.feedback}}</textarea><br>
+    <b>Feedback:</b><br><textarea name="feedback" style="min-height:150px">{% if grade.feedback %}{{grade.feedback}}{% endif %}</textarea><br>
     <input type="submit" value="Save feedback">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--aristotle-blue)">{% if savedmessage %}{{savedmessage}}{% endif %}</span>
 </form>
 {% endblock %}

@@ -23,4 +23,10 @@ No submissions yet!
     <p>{{submission.details}}</p>
 </div>
 {% endfor %}
+<h3>Feedback:</h3>
+{% if grade.feedback %}
+<p>{{grade.feedback}}</p>
+{% else %}
+<p>No feedback yet!</p>
+{% endif %}
 {% endblock %}
