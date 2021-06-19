@@ -102,7 +102,7 @@ class TeacherAssignmentRow():
         self.submitted = 0
         course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
         for student in User.objects.filter(course_of_student=course):
-            if Grade.objects.filter(student=student, assignment=assignment, earned_points__ne=None).count() > 0 or Submission.objects.filter(student=student, assignment=assignment).count() > 0:
+            if Grade.objects.filter(student=student, assignment=assignment).exclude(earned_points=None).count() > 0 or Submission.objects.filter(student=student, assignment=assignment).count() > 0:
                 self.submitted += 1
         self.nostudents = User.objects.filter(course_of_student=course).count()
         self.graded = Grade.objects.filter(Q(assignment=assignment) & ~Q(earned_points=None)).count()
