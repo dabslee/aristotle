@@ -14,7 +14,7 @@
     <h3>Submissions:</h3>
     <a href="{% url 'forum:newsubmission' assignment.id %}"><div class="button">New submission</div></a>
 </div>
-{% if submission|length == 0 %}
+{% if submissions|length == 0 %}
 No submissions yet!
 {% endif %}
 {% for submission in submissions %}

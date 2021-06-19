@@ -2,7 +2,7 @@
 
 {% block content %}
 <h2>Submissions by {{student.username}}</h2>
-{% if submission|length == 0 %}
+{% if submissions|length == 0 %}
 <p>No submissions yet!</p>
 {% endif %}
 {% for submission in submissions %}
