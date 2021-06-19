@@ -10,8 +10,5 @@
     <a href="{% url 'authentication:login' %}"><div class="button" style="margin-right: 10px">Log In</div></a>
     <a href="{% url 'authentication:signup' %}"><div class="button">Sign Up</div></a>
 </div>
-<h2>Development</h2>
-<p>
-    Site designed and built by <a href="http://brandonssandbox.com/">Brandon Lee</a>. Code available <a href="http://github.com/dabslee/aristotle">here</a>. Feel free to contribute by contacting me or sending pull requests!
-</p>
+{% include 'devnotes.html' %}
 {% endblock %}
