@@ -20,8 +20,8 @@
         <td>{% if assignment.graded != assignment.submitted %}&#8226;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{assignment.title}}</td>
         <td>{% if assignment.start_datetime != None %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
         <td>{% if assignment.end_datetime != None %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.submitted != None %}{{assignment.submitted}}{% else %}--{% endif %}/{% if assignment.nostudents %}{{assignment.nostudents}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.graded != None %}{{assignment.graded}}{% else %}--{% endif %}/{% if assignment.submitted %}{{assignment.submitted}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.submitted != None %}{{assignment.submitted}}{% else %}--{% endif %}/{% if assignment.nostudents != None %}{{assignment.nostudents}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.graded != None %}{{assignment.graded}}{% else %}--{% endif %}/{% if assignment.submitted != None %}{{assignment.submitted}}{% else %}--{% endif %}</td>
     </tr>
     {% endfor %}
 </table>
