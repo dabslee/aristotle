@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>{{student.username}}'s Assignments</h2>
+<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b> submitted by <b>{{student.username}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
+</div>
+<table>
+    <tr>
+        <th>Assignment</th>
+        <th>Start Date</th>
+        <th>Due Date</th>
+        <th>Grade</th>
+        <th>Submitted</th>
+    </tr>
+    {% for assignment in assignments %}
+    <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer" class="{% if assignment.submitted %}done{% else %}not-done{% endif %}">
+        <td>{% if not assignment.submitted %}&#8226;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{assignment.title}}</td>
+        <td>{% if assignment.start_datetime %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.end_datetime %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.earned_points %}{{assignment.earned_points}}{% else %}--{% endif %}
+            / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}</td>
+        <td>{% if assignment.submitted %}Yes{% else %}No{% endif %}</td>
+    </tr>
+    <style>
+        .done {
+            background-color: var(--fog-gray)
+        }
+        .done:hover {
+            background-color: var(--dark-fog-gray);
+        }
+        .not-done {
+            font-weight: bold; color: var(--aristotle-blue)
+        }
+    </style>
+    {% endfor %}
+</table>
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}

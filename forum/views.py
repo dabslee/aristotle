@@ -237,3 +237,19 @@ def newassignment(request):
     else:
         context["form"] = forms.CreateAssignmentForm()
         return render(request, "newassignment.html", context)
+
+def studentgrades(request, student_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    context = alwaysContext(request)
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    student = User.objects.get(id=student_id)
+    if (course.owner == request.user):
+        assignments = []
+        for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
+            assignments.append(StudentAssignmentRow(student, assignment))
+        context["assignments"] = assignments
+        context["student"] = student
+        return render(request, "studentgrades.html", context)
+    else:
+        return redirect('home')
