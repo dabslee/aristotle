@@ -79,15 +79,30 @@ def createcourse(request):
         context["form"] = forms.CreateCourseForm()
         return render(request, "createcourse.html", context)
 
+class AssignmentRow():
+    def __init__(self, student, assignment):
+        self.id=assignment.id
+        self.title=assignment.title
+        self.start_datetime=assignment.start_datetime
+        self.end_datetime=assignment.end_datetime
+        grade = Grade.objects.filter(Q(assignment=assignment) & Q(student=student)).first()
+        self.earned_points=grade.earned_points
+        self.total_points=assignment.total_points
+        submissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student))
+        self.submitted= submissions.count() > 0
 def assignments(request):
     if not request.user.is_authenticated:
         return redirect('home')
     context = alwaysContext(request)
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    context["assignments"] = Assignment.objects.filter(course=course).order_by("end_datetime")
     if (course.owner == request.user):
+        context["assignments"] = Assignment.objects.filter(course=course).order_by("end_datetime")
         return render(request, "assignments_teacher.html", context)
     else:
+        assignments = []
+        for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
+            assignments.append(AssignmentRow(request.user, assignment))
+        context["assignments"] = assignments
         return render(request, "assignments_student.html", context)
 
 class SubmissionRow():
