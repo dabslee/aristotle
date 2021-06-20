@@ -208,8 +208,8 @@ def viewsubmission(request, assignment_id=None, student_id=None):
     else:
         context["grade"] = context["grade"].first()
     if request.method == "POST":
-        context["grade"].earned_points = request.POST['grade']
-        context["grade"].feedback = request.POST['feedback']
+        context["grade"].earned_points = request.POST['grade'] if request.POST['grade'] else None
+        context["grade"].feedback = request.POST['feedback'] if request.POST['feedback'] else None
         context["grade"].save()
         context["savedmessage"] = "Feedback saved!"
     context["submissions"] = Submission.objects.filter(Q(assignment_id=assignment_id) & Q(student_id=student_id)).order_by('-submit_datetime')
