@@ -1,0 +1,9 @@
+.done {
+    background-color: var(--fog-gray)
+}
+.done:hover {
+    background-color: var(--dark-fog-gray);
+}
+.not-done {
+    font-weight: bold; color: var(--aristotle-blue-text)
+}

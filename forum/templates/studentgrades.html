@@ -23,17 +23,7 @@
             / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}</td>
         <td>{% if assignment.submitted %}Yes{% else %}No{% endif %}</td>
     </tr>
-    <style>
-        .done {
-            background-color: var(--fog-gray)
-        }
-        .done:hover {
-            background-color: var(--dark-fog-gray);
-        }
-        .not-done {
-            font-weight: bold; color: var(--aristotle-blue)
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/done.css' %}">
     {% endfor %}
 </table>
 <link rel="stylesheet" href="{% static 'css/table.css' %}">

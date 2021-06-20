@@ -39,6 +39,17 @@
                 {% endblock %}
             </div>
         </div>
-        <div id="pagefoot"><a href="http://brandonssandbox.com" style="color:white; text-decoration: underline;">Brandon Lee</a>, &#169; 2021. Unsafe release 06/19/2021.</div>
+        <div id="pagefoot">
+            <div></div>
+            <p><a href="http://brandonssandbox.com" style="color:var(--always-white); text-decoration: underline;">Brandon Lee</a>, &#169; 2021. Unsafe release 06/19/2021.</p>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            <div style="font-style: normal;">&ensp;&#9790;</div>
+            <link rel="stylesheet" href="{% static 'css/themeswitcher.css' %}">
+            <script src="{% static 'js/themeswitcher.js' %}"></script>
+        </div>
     </body>
 </html>
