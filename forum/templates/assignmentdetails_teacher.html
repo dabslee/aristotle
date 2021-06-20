@@ -29,8 +29,8 @@
         <td>{{student.username}}</td>
         <td>{{student.nosubmissions}}</td>
         <td>
-            {% if student.grade %}{{student.grade}}{% else %}--{% endif %}
-            / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}
+            {% if student.grade != None %}{{student.grade}}{% else %}--{% endif %}
+            / {% if assignment.total_points != None %}{{assignment.total_points}}{% else %}--{% endif %}
         </td>
         <td>{{student.percentgrade}}%</td>
         <td><a href="{{student.link}}"><div class="button">Review submission</div></a></td>
