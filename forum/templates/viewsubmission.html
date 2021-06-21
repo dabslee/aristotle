@@ -8,7 +8,7 @@
 {% for submission in submissions %}
 <div class="cutebox">
     <p><i>{{submission.submit_datetime}}</i></p>
-    <p>{{submission.details}}</p>
+    <p>{{submission.details|linebreaksbr}}</p>
 </div>
 {% endfor %}
 <h2>Grade and Feedback</h2>
