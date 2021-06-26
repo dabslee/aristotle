@@ -16,6 +16,7 @@
     --main-background: white;
     --input-background: white;
     --always-white: white;
+    --muted-gray: #eee;
 }
 [data-theme="dark"] {
     --aristotle-blue: #2e485a;
@@ -30,6 +31,7 @@
     --black-text: #bbb;
     --input-background: #27292a;
     --always-white: #bbb;
+    --muted-gray: #555;
 }
 
 html {
