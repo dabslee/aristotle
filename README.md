@@ -16,10 +16,9 @@ A free, open-source learning management system (LMS) build on Django and deploye
 ## Priority Backlog (Next Patch)
 - [X] Use an iframe to display readme on home pages
 - [ ] Add "report an issue" button
-- [ ] Add social media sharing tags
+- [X] Add social media sharing buttons
 - [ ] Cumulative grade displaying
 - [ ] Email notifications for assignment updates
-- [ ] Cookie 
 
 ## Backlog
 * File uploads for assignments and submissions
@@ -27,9 +26,10 @@ A free, open-source learning management system (LMS) build on Django and deploye
 * Non-assignment pages
 * Actual SSL certification
 * Switch session course tracking method from cookies to request kwargs
+* Render readme iframe as formatted HTML
 
 ## Issues/bugs
-If there are urgent bugs, [email me](mailto:brandon.sangmin.lee@gmail.com). Otherwise, for nonurgent bugs and issues, make a submission on the [issues page](https://github.com/dabslee/aristotle/issues)
+If there are urgent bugs, [email me](mailto:brandon.sangmin.lee@gmail.com). Otherwise, for nonurgent bugs and issues, make a submission on the [issues page](https://github.com/dabslee/aristotle/issues).
 
 ## Contribute
 Feel free to contribute by submitting pull requests!
