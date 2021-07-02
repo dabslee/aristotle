@@ -20,10 +20,10 @@ A free, open-source learning management system (LMS) build on Django and deploye
   * Submitting text submissions to assignments as a student and viewing the grades once available.
 
 ## Priority Backlog (Next Patch - v0.1.3)
-- [X] Show cumulative grade for students on teacher views
-- [X] "Unsaved changes" confirmation dialogue before leaving form pages
-- [X] Show assignment details on new submission form
-- [X] File attachment uploading for assignments and submissions
+- [ ] Show cumulative grade for students on teacher views
+- [ ] "Unsaved changes" confirmation dialogue before leaving form pages
+- [ ] Show assignment details on new submission form
+- [ ] File attachment uploading for assignments and submissions
 
 ## Backlog
 * Email notifications for assignment updates
