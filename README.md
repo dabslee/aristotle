@@ -2,7 +2,13 @@
 A free, open-source learning management system (LMS) build on Django and deployed on Heroku.
 
 ## Dev Notes
-* 6/19/2021 (v.0.1.1): Patch refining existing features:
+* 7/2/2021 (v0.1.2): Minor UI additions patch:
+  * Now use an iframe to display GitHub readme on home pages
+  * Added "report an issue" button to page footer
+  * Added social media sharing buttons to page footer
+  * Now display cumulative grade on student assignments overview
+  * Added delete button for assignments on assignment details page
+* 6/19/2021 (v0.1.1): Patch refining existing features:
   * Used CloudFlare proxy for HTTPS protocol to get website working on secure browsers (still unsafe due to half of protocol being unsecure)
   * Clicking on students on the Students page for teachers now shows a tabular summary of the student assignments.
   * Assignment page for students and teachers has been switched from a simple list of assignment names to a tabular summary of grades and submissions.
@@ -13,22 +19,17 @@ A free, open-source learning management system (LMS) build on Django and deploye
   * Creating assignments as a teacher and grading student submissions.
   * Submitting text submissions to assignments as a student and viewing the grades once available.
 
-## Priority Backlog (Next Patch)
-- [X] Use an iframe to display readme on home pages
-- [X] Add "report an issue" button
-- [X] Add social media sharing buttons
-- [X] Display cumulative grade on student assignments overview
-- [ ] Email notifications for assignment updates
-- [ ] Delete option for assignments
+## Priority Backlog (Next Patch - v0.1.3)
+- [X] "Unsaved changes" confirmation dialogue before leaving form pages
+- [X] Show assignment details on new submission form
+- [X] File attachment uploading for assignments and submissions
 
 ## Backlog
-* "Unsaved changes" confirmation dialogue before leaving form pages
-* Show assignment details on new submission form
-* File uploads for assignments and submissions
+* Email notifications for assignment updates
 * Status tags instead of unread/read formatting for assignments
 * Feature voting
 * Non-assignment pages
-* Actual SSL certification
+* Full SSL certification
 * Switch session course tracking method from cookies to request kwargs
 * Render readme iframe as formatted HTML
 * A breadcrumbs navigation bar

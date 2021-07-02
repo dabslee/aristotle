@@ -264,3 +264,12 @@ def studentgrades(request, student_id):
         return render(request, "studentgrades.html", context)
     else:
         return redirect('home')
+
+def delete_assignment(request, assignment_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    if (course.owner != request.user):
+        return redirect('home')
+    Assignment.objects.filter(id=assignment_id).delete()
+    return redirect('forum:assignments')

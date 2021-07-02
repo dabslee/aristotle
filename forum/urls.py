@@ -14,5 +14,6 @@ urlpatterns = [
     path('assignments/newassignment', views.newassignment, name='newassignment'),
     path('assignments/<assignment_id>', views.assignmentdetails, name='assignmentdetails'),
     path('assignments/<assignment_id>/submit', views.newsubmission, name='newsubmission'),
+    path('assignments/<assignment_id>/delete', views.delete_assignment, name='delete_assignment'),
     path('assignments/submissions/assignment_id=<assignment_id>/student_id=<student_id>', views.viewsubmission, name='viewsubmission'),
 ]
