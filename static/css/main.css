@@ -74,7 +74,8 @@ a {
 #pagefoot {
     display: flex;
     flex-direction: row;
-    padding: 10px;
+    padding: 30px;
+    min-height: fit-content;
     align-items: center;
     justify-content: space-between;
     color: var(--always-white);
