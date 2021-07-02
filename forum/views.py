@@ -88,8 +88,12 @@ class StudentAssignmentRow():
         grade = Grade.objects.filter(Q(assignment=assignment) & Q(student=student)).first()
         if grade:
             self.earned_points=grade.earned_points
+            self.cum_num=grade.earned_points if grade.earned_points else 0
+            self.cum_den=assignment.total_points if (assignment.total_points and grade.earned_points) else 0
         else:
             self.earned_points=None
+            self.cum_num=0
+            self.cum_den=0
         self.total_points=assignment.total_points
         submissions = Submission.objects.filter(Q(assignment=assignment) & Q(student=student))
         self.submitted= submissions.count() > 0 or self.earned_points != None
@@ -118,8 +122,15 @@ def assignments(request):
         return render(request, "assignments_teacher.html", context)
     else:
         assignments = []
+        cum_num = 0
+        cum_den = 0
         for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
-            assignments.append(StudentAssignmentRow(request.user, assignment))
+            row = StudentAssignmentRow(request.user, assignment)
+            assignments.append(row)
+            cum_num += row.cum_num
+            cum_den += row.cum_den
+        context["cum_num"] = cum_num
+        context["cum_den"] = cum_den
         context["assignments"] = assignments
         return render(request, "assignments_student.html", context)
 

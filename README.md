@@ -17,7 +17,7 @@ A free, open-source learning management system (LMS) build on Django and deploye
 - [X] Use an iframe to display readme on home pages
 - [X] Add "report an issue" button
 - [X] Add social media sharing buttons
-- [ ] Cumulative grade displaying
+- [X] Display cumulative grade on student assignments overview
 - [ ] Email notifications for assignment updates
 - [ ] Delete option for assignments
 
