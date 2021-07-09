@@ -13,7 +13,7 @@
                 <b>Total points: </b><input name="points" type="number" value="{{assignment.total_points}}"></input><br>
             </i></p>
         </div>
-        <div class="button" onclick="delete_assn()" style="height: fit-content; background-color: #df3838;">Delete assignment</div>
+        <div class="button" onclick="delete_assn()" style="height: fit-content; background-color: var(--button-red);">Delete assignment</div>
         <script>
             function delete_assn() {
                 if (confirm("Are you sure you want to delete this assignment?")) {

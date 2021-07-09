@@ -22,7 +22,7 @@ class Course(models.Model):
         editable=False
     )
 
-class AssignmentGrouping(models.Model):
+class AssignmentModule(models.Model):
     name = models.CharField(max_length=100)
     course = models.ForeignKey(
         Course,
@@ -43,7 +43,7 @@ class Assignment(models.Model):
         related_name='assignments_of_course'
     )
     grouping = models.ForeignKey(
-        AssignmentGrouping,
+        AssignmentModule,
         on_delete=models.CASCADE,
         related_name='assignments_of_grouping',
         null=True
