@@ -257,11 +257,18 @@ def studentgrades(request, student_id):
     student = User.objects.get(id=student_id)
     if (course.owner == request.user):
         assignments = []
+        cum_num = 0
+        cum_den = 0
         for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
-            assignments.append(StudentAssignmentRow(student, assignment))
+            row = StudentAssignmentRow(student, assignment)
+            assignments.append(row)
+            cum_num += row.cum_num
+            cum_den += row.cum_den
+        context["cum_num"] = cum_num
+        context["cum_den"] = cum_den
         context["assignments"] = assignments
         context["student"] = student
-        return render(request, "studentgrades.html", context)
+        return render(request, "assignments_student.html", context)
     else:
         return redirect('home')
 

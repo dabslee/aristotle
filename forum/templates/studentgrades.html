@@ -27,4 +27,5 @@
     {% endfor %}
 </table>
 <link rel="stylesheet" href="{% static 'css/table.css' %}">
+<p><b>Cumulative grade:</b> {{cum_num}}/{{cum_den}} &#8776; {% widthratio cum_num cum_den 100 %}%</p>
 {% endblock %}
