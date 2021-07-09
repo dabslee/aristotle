@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 import uuid
 
+from django.db.models import constraints
+
 # Create your models here.
 class Course(models.Model):
     name = models.CharField(max_length=100)
@@ -20,10 +22,31 @@ class Course(models.Model):
         editable=False
     )
 
-class Assignment(models.Model):
+class AssignmentGrouping(models.Model):
+    name = models.CharField(max_length=100)
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE
+    )
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name', 'course'],
+                name='unique name'
+            )
+        ]
+
+class Assignment(models.Model):
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name='assignments_of_course'
+    )
+    grouping = models.ForeignKey(
+        AssignmentGrouping,
+        on_delete=models.CASCADE,
+        related_name='assignments_of_grouping',
+        null=True
     )
     title = models.CharField(max_length=100)
     start_datetime = models.DateTimeField(null=True, blank=True)
