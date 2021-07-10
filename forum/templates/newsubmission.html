@@ -2,9 +2,20 @@
 
 {% block content %}
 <h2>New submission for "{{assignment.title}}"</h2>
+<p><i>
+    <b>Start date: </b>{% if assignment.start_datetime %}{{assignment.start_datetime}}{% else %}--{% endif %}<br>
+    <b>End date: </b>{% if assignment.end_datetime %}{{assignment.end_datetime}}{% else %}--{% endif %}<br>
+    <b>Grade: </b>{% if grade.earned_points %}{{grade.earned_points}}{% else %}--{% endif %}
+    / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}
+    {% if grade.feedback %}
+    <br><b>Feedback: </b>{{grade.feedback|linebreaksbr}}
+    {% endif %}
+</i></p>
+<h3>Description:</h3>
+<p>{{assignment.description |linebreaksbr |safe}}</p>
 <form action="{% url 'forum:newsubmission' assignment.id %}" method="post">
     {% csrf_token %}
-    Text submission:<br>
+    <h3>Text submission:</h3>
     {{form.details}}<br>
     <input type="submit" value="Submit">
 </form>
