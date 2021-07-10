@@ -147,6 +147,7 @@ class SubmissionRow():
             self.grade = self.grade.earned_points
             if self.grade != None and assignment.total_points != None and assignment.total_points != 0:
                 self.percentgrade = float(self.grade) * 100 / float(assignment.total_points)
+                self.percentgrade = round(self.percentgrade, 2)
             else:
                 self.percentgrade = "--"
         else:
