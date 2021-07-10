@@ -5,8 +5,7 @@
         <title>aristotle</title>
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
         <link rel="icon" href="{% static 'img/favicon.ico' %}">
-        <link rel="stylesheet" href="{% static 'css/themeswitcher.css' %}">
-        <script src="{% static 'js/themeswitcher.js' %}"></script>
+        <script src="{% static 'js/themeswitcher_beg.js' %}"></script>
     </head>
     <body>
         <a href="{% url 'home' %}">
@@ -54,6 +53,8 @@
                             <div class="slider round"></div>
                         </label>
                     <div style="font-style: normal;">&ensp;&#9790;</div>
+                    <link rel="stylesheet" href="{% static 'css/themeswitcher.css' %}">
+                    <script src="{% static 'js/themeswitcher_end.js' %}"></script>
                     &ensp;&ensp;&ensp;&ensp;
                     Share: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><div id='shareLinks' style='display:flex;flex-direction:row;font-size: 16px;'> <a id="Facebook-share-icon" class="fa fa-facebook" target="_blank"></a> <script> var curr = window.location.href; document.getElementById("Facebook-share-icon").href = `https://www.facebook.com/sharer/sharer.php?u=${curr}`; </script> <a id="Twitter-share-icon" class="fa fa-twitter" target="_blank"></a> <script> var curr = window.location.href; document.getElementById("Twitter-share-icon").href = `http://www.twitter.com/share?url=${curr}`; </script> <a id="LinkedIn-share-icon" class="fa fa-linkedin" target="_blank"></a> <script> var curr = window.location.href; document.getElementById("LinkedIn-share-icon").href = `https://www.linkedin.com/sharing/share-offsite/?url=${curr}`; </script> <a id="Pinterest-share-icon" class="fa fa-pinterest" target="_blank"></a> <script> var curr = window.location.href; document.getElementById("Pinterest-share-icon").href = `http://pinterest.com/pin/create/link/?url=${curr}`; </script> <a class="fa fa-share" href="javascript:void(0);" onclick="copyUrlToClipboard()"></a> <script> function copyUrlToClipboard() { var dummy = document.createElement("textarea"); document.body.appendChild(dummy); dummy.value = window.location.href; dummy.select(); document.execCommand("copy"); document.body.removeChild(dummy); alert("Share link copied to clipboard!"); } </script> <style> .fa { text-decoration: none; color: #ffffff; border-radius: 0%; padding: 2px; padding-top: 5px; padding-bottom: -1px; margin: 0 0px; width: 20px; height: 20px; text-align: center; } .fa:hover{opacity: 0.5;} </style> </div>
                 </div>
