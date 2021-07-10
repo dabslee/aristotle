@@ -16,6 +16,7 @@
     --white-text: white;
     --black-text: black;
     --main-background: white;
+    --main-background-overlay: rgba(255, 255, 255, 0.7);
     --input-background: white;
     --always-white: white;
     --muted-gray: #eee;
@@ -28,7 +29,8 @@
     --dark-fog-gray: #2d2e2f;
     --extra-dark-fog-gray: rgb(49, 58, 63);
 
-    --main-background: #222;
+    --main-background: rgb(34, 34, 34);
+    --main-background-overlay: rgba(34, 34, 34, 0.6);
     --white-text: black;
     --black-text: #bbb;
     --input-background: #27292a;
@@ -126,7 +128,7 @@ h2 {
     opacity: 0.7;
 }
 
-input {
+textarea, select, input {
     font-family: 'Nunito';
     font-size: medium;
     padding: 5px;
@@ -136,23 +138,13 @@ input {
     background-color: var(--input-background);
     color: var(--black-text);
 }
-input:focus {
+textarea:focus, select:focus, input:focus {
     outline: none;
 }
 textarea {
-    font-family: 'Nunito';
     min-height: 50vh;
     min-width: 70vw;
-    font-size: medium;
     padding: 10px;
-    border: solid 1px var(--aristotle-blue);
-    margin: 5px;
-    border-radius: 5px;
-    background-color: var(--input-background);
-    color: var(--black-text);
-}
-textarea:focus {
-    outline: none;
 }
 input[type=submit]{
     border: none;

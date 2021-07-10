@@ -25,6 +25,10 @@
             <td>Total points:</td>
             <td>{{form.total_points}}</td>
         </tr>
+        <tr>
+            <td>Module:</td>
+            <td>{{form.module}}</td>
+        </tr>
     </table>
     <input type="submit" value="Submit">
     <style>
@@ -33,6 +37,12 @@
     <script>
         document.getElementsByName("start_datetime")[0].type = "datetime-local";
         document.getElementsByName("end_datetime")[0].type = "datetime-local";
+        document.getElementsByTagName("select")[0].innerHTML += `<option value="No module">No module</option>`;
     </script>
+    {% for assnmodule in modules %}
+    <script>
+        document.getElementsByTagName("select")[0].innerHTML += `<option value="{{assnmodule}}">{{assnmodule}}</option>`;
+    </script>
+    {% endfor %}
 </form>
 {% endblock %}

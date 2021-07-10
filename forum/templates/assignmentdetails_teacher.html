@@ -11,6 +11,12 @@
                 <b>Start date: </b><input name="start" type="datetime-local" value="{{assignment.start_datetime|date:'Y-m-d\TH:i'}}"></input><br>
                 <b>End date: </b><input name="end" type="datetime-local" value="{{assignment.end_datetime|date:'Y-m-d\TH:i'}}"></input><br>
                 <b>Total points: </b><input name="points" type="number" value="{{assignment.total_points}}"></input><br>
+                <b>Module: <select name="module">
+                    <option value="No module">No module</option>
+                    {% for assnmodule in modules %}
+                    <option value="{{assnmodule}}"{% if modulename == assnmodule %}selected{% endif %}>{{assnmodule}}</option>
+                    {% endfor %}
+                </select></b>
             </i></p>
         </div>
         <div class="button" onclick="delete_assn()" style="height: fit-content; background-color: var(--button-red);">Delete assignment</div>

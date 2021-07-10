@@ -25,6 +25,7 @@
                     <a href="{% url 'forum:courses' %}"><li>Courses</li></a>
                     {% if selected_course %}
                     {% if selected_course.owner == request.user %}<a href="{% url 'forum:students' %}"><li>Students</li></a>{% endif %}
+                    <a href="{% url 'forum:modules' %}"><li>Modules</li></a>
                     <a href="{% url 'forum:assignments' %}"><li>Assignments</li></a>
                     {% endif %}
                 </ul>

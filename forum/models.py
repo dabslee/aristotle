@@ -42,10 +42,10 @@ class Assignment(models.Model):
         on_delete=models.CASCADE,
         related_name='assignments_of_course'
     )
-    grouping = models.ForeignKey(
+    module = models.ForeignKey(
         AssignmentModule,
         on_delete=models.CASCADE,
-        related_name='assignments_of_grouping',
+        related_name='assignments_of_module',
         null=True
     )
     title = models.CharField(max_length=100)

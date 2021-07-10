@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponse
 
-from .models import Assignment, Course, Submission, Grade
+from .models import Assignment, AssignmentModule, Course, Submission, Grade
 from . import forms
 
 import datetime
@@ -158,7 +158,8 @@ def assignmentdetails(request, assignment_id):
         return redirect('home')
     context = alwaysContext(request)
     assignment = Assignment.objects.get(id=assignment_id)
-    if Course.objects.filter(id=request.session.get('selected_course_id')).first() != assignment.course:
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    if course != assignment.course:
         return redirect('home')
     
     if request.method == "POST":
@@ -167,15 +168,18 @@ def assignmentdetails(request, assignment_id):
         assignment.end_datetime = dateConvert(request.POST['end'])
         assignment.description = request.POST['description']
         assignment.total_points = request.POST['points'] if request.POST['points']!="" else None
+        assignment.module=AssignmentModule.objects.filter(name=request.POST['module'], course=course).first()
         assignment.save()
         context["savedmessage"] = "Changes saved."
     
     context["assignment"] = assignment
+    context["modulename"] = assignment.module.name
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     if (course.owner == request.user):
         context["students"] = []
         for student in User.objects.filter(course_of_student=course):
             context["students"].append(SubmissionRow(student, assignment))
+        context["modules"] = [module.name for module in AssignmentModule.objects.filter(course=course)]
         return render(request, "assignmentdetails_teacher.html", context)
     else:
         context["grade"] = Grade.objects.filter(Q(assignment_id=assignment_id) & Q(student=request.user))
@@ -242,10 +246,12 @@ def newassignment(request):
                 end_datetime=form.cleaned_data['end_datetime'],
                 description=form.cleaned_data['description'],
                 total_points=form.cleaned_data['total_points'],
-                course=course
+                course=course,
+                module=AssignmentModule.objects.filter(name=form.cleaned_data['module'], course=course).first(),
             )
             return HttpResponseRedirect(reverse("forum:assignments"))
     else:
+        context["modules"] = [module.name for module in AssignmentModule.objects.filter(course=course)]
         context["form"] = forms.CreateAssignmentForm()
         return render(request, "newassignment.html", context)
 
@@ -280,3 +286,29 @@ def delete_assignment(request, assignment_id):
         return redirect('home')
     Assignment.objects.filter(id=assignment_id).delete()
     return redirect('forum:assignments')
+
+def modules(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    context = alwaysContext(request)
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    context["modules"] = {"No module" : Assignment.objects.filter(course=course, module=None)}
+    for module in AssignmentModule.objects.filter(course=course):
+        context["modules"][module.name] = Assignment.objects.filter(course=course, module=module)
+    return render(request, "modules.html", context)
+
+def createmodule(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    if request.method == 'POST':
+        form = forms.CreateModuleForm(request.POST)
+        if form.is_valid():
+            AssignmentModule.objects.create(
+                name=form.cleaned_data['name'],
+                course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+            )
+            return redirect("forum:modules")
+    else:
+        context = alwaysContext(request)
+        context["form"] = forms.CreateModuleForm()
+        return render(request, "createmodule.html", context)

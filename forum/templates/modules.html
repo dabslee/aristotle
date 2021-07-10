@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Modules</h2>
+{% for module_name,module_assignments in modules.items %}
+<div class="cutebox">
+    <h3>{{module_name}}</h3>
+    {% for assn in module_assignments %}
+    <a href='{% url 'forum:assignmentdetails' assn.id %}'><div class="cutebox" style="background-color: var(--main-background-overlay)">{{assn.title}}</div></a>
+    {% endfor %}
+</div>
+{% endfor %}
+<a href="{% url 'forum:createmodule' %}"><div class="cutebox" style="background-color: var(--fog-gray);">&#8853;&nbsp;&nbsp;&nbsp;&nbsp;Create a new module</div></a>
+{% endblock %}
