@@ -44,6 +44,7 @@ html {
 }
 
 body {
+    background-color: var(--main-background);
     font-family: var(--main-font);
     margin: 0px;
     display: flex;
@@ -70,6 +71,7 @@ a {
 }
 
 #fullcontainer {
+    background-color: var(--main-background);
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -88,6 +90,7 @@ a {
 }
 
 #content {
+    background-color: var(--main-background);
     margin: var(--main-margin);
     width: 100%;
     height: fit-content;

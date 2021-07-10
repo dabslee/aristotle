@@ -173,7 +173,7 @@ def assignmentdetails(request, assignment_id):
         context["savedmessage"] = "Changes saved."
     
     context["assignment"] = assignment
-    context["modulename"] = assignment.module.name
+    context["modulename"] = assignment.module.name if assignment.module else "No module"
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     if (course.owner == request.user):
         context["students"] = []
