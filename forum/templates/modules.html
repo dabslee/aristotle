@@ -3,13 +3,34 @@
 
 {% block content %}
 <h2>Modules</h2>
-{% for module_name,module_assignments in modules.items %}
+{% for module in modules %}
 <div class="cutebox">
-    <h3>{{module_name}}</h3>
-    {% for assn in module_assignments %}
-    <a href='{% url 'forum:assignmentdetails' assn.id %}'><div class="cutebox" style="background-color: var(--main-background-overlay)">{{assn.title}}</div></a>
-    {% endfor %}
+    <h3 id="module-button-{{module.id}}" onclick="toggleCollapse({{module.id}})" style="cursor: pointer; display: flex; flex-direction: row; justify-content: space-between;">
+        <span>{{module.name}}</span>
+        <img src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png"/>
+    </h3>
+    <div id="module-content-{{module.id}}" style="overflow-y: hidden; height: 0px">
+        {% for assn in module.assignments %}
+        <a href='{% url 'forum:assignmentdetails' assn.id %}'><div class="cutebox" style="background-color: var(--main-background-overlay)">{{assn.title}}</div></a>
+        {% endfor %}
+    </div>
 </div>
+<script>
+    function toggleCollapse(id){
+        var contentElem = document.getElementById(`module-content-${id}`);
+        var headingElem = document.getElementById(`module-button-${id}`);
+        if (contentElem.style.height == "0px") {
+            contentElem.style.height = "";
+        } else {
+            contentElem.style.height = "0px";
+        }
+    }
+</script>
+<style>
+    h3:hover {
+        opacity: 0.5;
+    }
+</style>
 {% endfor %}
 <a href="{% url 'forum:createmodule' %}"><div class="cutebox" style="background-color: var(--fog-gray);">&#8853;&nbsp;&nbsp;&nbsp;&nbsp;Create a new module</div></a>
 {% endblock %}

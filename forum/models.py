@@ -2,8 +2,6 @@ from django.conf import settings
 from django.db import models
 import uuid
 
-from django.db.models import constraints
-
 # Create your models here.
 class Course(models.Model):
     name = models.CharField(max_length=100)

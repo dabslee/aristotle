@@ -287,14 +287,19 @@ def delete_assignment(request, assignment_id):
     Assignment.objects.filter(id=assignment_id).delete()
     return redirect('forum:assignments')
 
+class ModuleWrapper():
+    def __init__(self, name, id, assignments):
+        self.name = name
+        self.id = id
+        self.assignments = assignments
 def modules(request):
     if not request.user.is_authenticated:
         return redirect('home')
     context = alwaysContext(request)
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    context["modules"] = {"No module" : Assignment.objects.filter(course=course, module=None)}
+    context["modules"] = [ModuleWrapper("No module", 0, Assignment.objects.filter(course=course, module=None))]
     for module in AssignmentModule.objects.filter(course=course):
-        context["modules"][module.name] = Assignment.objects.filter(course=course, module=module)
+        context["modules"].append(ModuleWrapper(module.name, module.id, Assignment.objects.filter(course=course, module=module)))
     return render(request, "modules.html", context)
 
 def createmodule(request):
