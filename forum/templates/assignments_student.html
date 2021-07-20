@@ -6,6 +6,17 @@
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
 </div>
+<form method="POST" action="{% url 'forum:assignments' %}">
+    {% csrf_token %}
+    <div class="cutebox">
+        <label>Filter by module: <select>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+        </select></label>
+        <input type="submit" value="Submit">
+    </div>
+</form>
 <table>
     <tr>
         <th>Assignment</th>
