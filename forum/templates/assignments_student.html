@@ -8,13 +8,12 @@
 </div>
 <form method="POST" action="{% url 'forum:assignments' %}">
     {% csrf_token %}
-    <div class="cutebox">
-        <label>Filter by module: <select>
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
+    <div class="cutebox" style="display: flex; flex-direction: row; align-items: center;">
+        <label>Filter by module: <select name="modulefilter">
+            {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
         </select></label>
         <input type="submit" value="Submit">
+        <a href="{% url 'forum:assignments' %}"><div class="button" style="background-color: var(--button-red);">Clear</div></a>
     </div>
 </form>
 <table>

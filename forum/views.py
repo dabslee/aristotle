@@ -115,16 +115,20 @@ def assignments(request):
         return redirect('home')
     context = alwaysContext(request)
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    selected_assignments = Assignment.objects.filter(course=course).order_by("end_datetime")
+    context["modules"] = AssignmentModule.objects.filter(course=course)
+    if request.method == "POST":
+        selected_assignments = Assignment.objects.filter(course=course, module_id=request.POST["modulefilter"])
     if (course.owner == request.user):
         context["assignments"] = []
-        for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
+        for assignment in selected_assignments:
             context["assignments"].append(TeacherAssignmentRow(assignment, request))
         return render(request, "assignments_teacher.html", context)
     else:
         assignments = []
         cum_num = 0
         cum_den = 0
-        for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
+        for assignment in selected_assignments:
             row = StudentAssignmentRow(request.user, assignment)
             assignments.append(row)
             cum_num += row.cum_num
