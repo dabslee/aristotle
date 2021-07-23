@@ -7,6 +7,16 @@
     {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
     <a href="{% url 'forum:newassignment' %}"><div class="button">Create a new assignment</div></a>
 </div>
+<form method="POST" action="{% url 'forum:assignments' %}">
+    {% csrf_token %}
+    <div class="cutebox" style="display: flex; flex-direction: row; align-items: center;">
+        <label>Filter by module: <select name="modulefilter">
+            {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
+        </select></label>
+        <input type="submit" value="Submit">
+        <a href="{% url 'forum:assignments' %}"><div class="button" style="background-color: var(--button-red);">Clear</div></a>
+    </div>
+</form>
 <table>
     <tr>
         <th>Assignment</th>
