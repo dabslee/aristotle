@@ -303,7 +303,7 @@ def modules(request):
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     context["modules"] = [ModuleWrapper("No module", 0, Assignment.objects.filter(course=course, module=None))]
     for module in AssignmentModule.objects.filter(course=course):
-        context["modules"].append(ModuleWrapper(module.name, module.id, Assignment.objects.filter(course=course, module=module)))
+        context["modules"].append(ModuleWrapper(module.name, module.id, Assignment.objects.filter(course=course, module=module).order_by("end_datetime")))
     return render(request, "modules.html", context)
 
 def createmodule(request):
