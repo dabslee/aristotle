@@ -39,12 +39,12 @@ class TeacherAssignmentRow():
                 self.submitted += 1
         self.nostudents = User.objects.filter(course_of_student=course).count()
         self.graded = Grade.objects.filter(Q(assignment=assignment) & ~Q(earned_points=None)).count()
-def gradeRender(student, request, context, course):
+def gradeRender(student, request, context, course, selected_assignments):
     context["modules"] = AssignmentModule.objects.filter(course=course)
     assignments = []
     cum_num = 0
     cum_den = 0
-    for assignment in Assignment.objects.filter(course=course).order_by("end_datetime"):
+    for assignment in selected_assignments:
         row = StudentAssignmentRow(student, assignment)
         assignments.append(row)
         cum_num += row.cum_num
@@ -60,7 +60,7 @@ def assignments(request):
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     selected_assignments = Assignment.objects.filter(course=course).order_by("end_datetime")
     if request.method == "POST":
-        selected_assignments = Assignment.objects.filter(course=course, module_id=request.POST["modulefilter"])
+        selected_assignments = Assignment.objects.filter(course=course, module_id=request.POST["modulefilter"]).order_by("end_datetime")
     if (course.owner == request.user):
         context["modules"] = AssignmentModule.objects.filter(course=course)
         context["assignments"] = []
@@ -69,7 +69,7 @@ def assignments(request):
         return render(request, "assignments_teacher.html", context)
     else:
         context["page_title"] = "Assignments"
-        return gradeRender(request.user, request, context, course)
+        return gradeRender(request.user, request, context, course, selected_assignments)
 
 def newassignment(request):
     if not request.user.is_authenticated:

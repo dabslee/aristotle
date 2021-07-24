@@ -2,7 +2,7 @@ from forum.views_folder.views_assignments import gradeRender
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
-from ..models import Course
+from ..models import Assignment, Course
 
 from .utilities import alwaysContext
 
@@ -21,8 +21,10 @@ def studentgrades(request, student_id):
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     student = User.objects.get(id=student_id)
     if (course.owner == request.user):
+        if request.method == "POST":
+            selected_assignments = Assignment.objects.filter(course=course, module_id=request.POST["modulefilter"])
         context["student"] = student
         context["page_title"] = "Grades for " + student.username
-        return gradeRender(student, request, context, course)
+        return gradeRender(student, request, context, course, selected_assignments)
     else:
         return redirect('home')
