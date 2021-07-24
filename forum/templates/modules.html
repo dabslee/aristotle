@@ -2,50 +2,62 @@
 {% load static %}
 
 {% block content %}
-<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-    <h2>Modules</h2>
-    <a href="{% url 'forum:createmodule' %}"><div class="button">New module</div></a>
-</div>
-{% for module in modules %}
-<div class="cutebox">
-    <h3 id="module-button-{{module.id}}" onclick="toggleCollapse({{module.id}})" style="cursor: pointer; display: flex; flex-direction: row; justify-content: space-between;">
-        <span>{{module.name}}</span>
-        <img src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png"/>
-    </h3>
-    <div id="module-content-{{module.id}}" style="overflow-y: hidden; height: 0px">
-        {% if module.assignments|length == 0 %}
-        <p>Module is empty!</p>
-        {% endif %}
-        {% for assn in module.assignments %}
-        <label><div style="display: flex; flex-direction: row; align-items: center; width: 100%">
-            {% if selected_course.owner == request.user %}
-            <input type="checkbox">
-            {% endif %}
-            <a href='{% url 'forum:assignmentdetails' assn.id %}' style="width: 100%">
-                <div class="cutebox" style="background-color: var(--main-background-overlay); display: flex; flex-direction: row; justify-content: space-between;">
-                    <span>{{assn.title}}</span>
-                    <span>Due: {{assn.end_datetime}}</span>
-                </div>
-            </a>
-        </div></label>
-        {% endfor %}
+<h2>Modules</h2>
+<form method="POST" action="{% url 'forum:assignments' %}">
+    {% csrf_token %}
+    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <div class="" style="display: flex; flex-direction: row; align-items: center;">
+            <label>Assign selected to module: <select name="modulefilter">
+                {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
+            </select></label>
+            <input type="submit" value="Submit">
+        </div>
+        <div style="display: flex; flex-direction: row; align-items: center;">
+            <a href="#"><div class="button" style="background-color: var(--button-red);">Delete selected</div></a>
+            <a href="{% url 'forum:createmodule' %}"><div class="button" style="margin-left: 5px">+ New module</div></a>
+        </div>
     </div>
-</div>
-<script>
-    function toggleCollapse(id){
-        var contentElem = document.getElementById(`module-content-${id}`);
-        var headingElem = document.getElementById(`module-button-${id}`);
-        if (contentElem.style.height == "0px") {
-            contentElem.style.height = "";
-        } else {
-            contentElem.style.height = "0px";
+    {% for module in modules %}
+    <div class="cutebox">
+        <h3 id="module-button-{{module.id}}" onclick="toggleCollapse({{module.id}})" style="cursor: pointer; display: flex; flex-direction: row; justify-content: space-between;">
+            <span>{{module.name}}</span>
+            <img src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png"/>
+        </h3>
+        <div id="module-content-{{module.id}}" style="overflow-y: hidden; height: 0px">
+            {% if module.assignments|length == 0 %}
+            <p>Module is empty!</p>
+            {% endif %}
+            {% for assn in module.assignments %}
+            <label><div style="display: flex; flex-direction: row; align-items: center; width: 100%">
+                {% if selected_course.owner == request.user %}
+                <input type="checkbox">
+                {% endif %}
+                <a href='{% url 'forum:assignmentdetails' assn.id %}' style="width: 100%">
+                    <div class="cutebox" style="background-color: var(--main-background-overlay); display: flex; flex-direction: row; justify-content: space-between;">
+                        <span>{{assn.title}}</span>
+                        <span>Due: {{assn.end_datetime}}</span>
+                    </div>
+                </a>
+            </div></label>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        function toggleCollapse(id){
+            var contentElem = document.getElementById(`module-content-${id}`);
+            var headingElem = document.getElementById(`module-button-${id}`);
+            if (contentElem.style.height == "0px") {
+                contentElem.style.height = "";
+            } else {
+                contentElem.style.height = "0px";
+            }
         }
-    }
-</script>
-<style>
-    h3:hover {
-        opacity: 0.5;
-    }
-</style>
-{% endfor %}
+    </script>
+    <style>
+        h3:hover {
+            opacity: 0.5;
+        }
+    </style>
+    {% endfor %}
+</form>
 {% endblock %}
