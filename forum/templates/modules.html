@@ -2,7 +2,10 @@
 {% load static %}
 
 {% block content %}
-<h2>Modules</h2>
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+    <h2>Modules</h2>
+    <a href="{% url 'forum:createmodule' %}"><div class="button">New module</div></a>
+</div>
 {% for module in modules %}
 <div class="cutebox">
     <h3 id="module-button-{{module.id}}" onclick="toggleCollapse({{module.id}})" style="cursor: pointer; display: flex; flex-direction: row; justify-content: space-between;">
@@ -14,7 +17,17 @@
         <p>Module is empty!</p>
         {% endif %}
         {% for assn in module.assignments %}
-        <a href='{% url 'forum:assignmentdetails' assn.id %}'><div class="cutebox" style="background-color: var(--main-background-overlay)">{{assn.title}}</div></a>
+        <label><div style="display: flex; flex-direction: row; align-items: center; width: 100%">
+            {% if selected_course.owner == request.user %}
+            <input type="checkbox">
+            {% endif %}
+            <a href='{% url 'forum:assignmentdetails' assn.id %}' style="width: 100%">
+                <div class="cutebox" style="background-color: var(--main-background-overlay); display: flex; flex-direction: row; justify-content: space-between;">
+                    <span>{{assn.title}}</span>
+                    <span>Due: {{assn.end_datetime}}</span>
+                </div>
+            </a>
+        </div></label>
         {% endfor %}
     </div>
 </div>
@@ -35,5 +48,4 @@
     }
 </style>
 {% endfor %}
-<a href="{% url 'forum:createmodule' %}"><div class="cutebox" style="background-color: var(--fog-gray);">&#8853;&nbsp;&nbsp;&nbsp;&nbsp;Create a new module</div></a>
 {% endblock %}

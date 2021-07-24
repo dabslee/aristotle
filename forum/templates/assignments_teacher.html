@@ -5,7 +5,7 @@
 <h2>Assignments</h2>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
-    <a href="{% url 'forum:newassignment' %}"><div class="button">Create a new assignment</div></a>
+    <a href="{% url 'forum:newassignment' %}"><div class="button">+ New assignment</div></a>
 </div>
 <form method="POST" action="{% url 'forum:assignments' %}">
     {% csrf_token %}
