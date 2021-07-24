@@ -3,20 +3,31 @@
 
 {% block content %}
 <h2>Modules</h2>
-<form method="POST" action="{% url 'forum:assignments' %}">
+<form method="POST" action="{% url 'forum:modules' %}">
     {% csrf_token %}
+    {% if selected_course.owner == request.user %}
     <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
         <div class="" style="display: flex; flex-direction: row; align-items: center;">
-            <label>Assign selected to module: <select name="modulefilter">
+            <label>Assign selected to module: <select name="moduleassign">
                 {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
             </select></label>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" name="moduleassign-submit">
         </div>
         <div style="display: flex; flex-direction: row; align-items: center;">
-            <a href="#"><div class="button" style="background-color: var(--button-red);">Delete selected</div></a>
+            <input onclick="return confirmDelete()" type="submit" value="Delete selected" name="delete-submit" style="background-color: var(--button-red);">
             <a href="{% url 'forum:createmodule' %}"><div class="button" style="margin-left: 5px">+ New module</div></a>
         </div>
     </div>
+    <script>
+        function confirmDelete() {
+            if (confirm("Are you sure you would like to delete these items? This action is irreversible.")) {
+                $("input[name='delete-submit']").submit();
+            } else {
+                return false;
+            }
+        }
+    </script>
+    {% endif %}
     {% for module in modules %}
     <div class="cutebox">
         <h3 id="module-button-{{module.id}}" onclick="toggleCollapse({{module.id}})" style="cursor: pointer; display: flex; flex-direction: row; justify-content: space-between;">
