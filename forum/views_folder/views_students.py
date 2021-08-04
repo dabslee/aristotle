@@ -21,6 +21,7 @@ def studentgrades(request, student_id):
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     student = User.objects.get(id=student_id)
     if (course.owner == request.user):
+        selected_assignments = Assignment.objects.filter(course=course).order_by("end_datetime")
         if request.method == "POST":
             selected_assignments = Assignment.objects.filter(course=course, module_id=request.POST["modulefilter"])
         context["student"] = student
