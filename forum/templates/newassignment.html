@@ -2,38 +2,40 @@
 
 {% block content %}
 <h2>Create a new assignment</h2>
-<form action="{% url 'forum:newassignment' %}" method="post">
+<form action="{% url 'forum:newassignment' %}" method="post" style="max-width: 800px;">
     {% csrf_token %}
-    <table>
-        <tr>
-            <td>Title:</td>
-            <td>{{form.title}}</td>
-        </tr>
-        <tr>
-            <td>Start:</td>
-            <td>{{form.start_datetime}}</td>
-        </tr>
-        <tr>
-            <td>Deadline:</td>
-            <td>{{form.end_datetime}}</td>
-        </tr>
-        <tr>
-            <td>Description:</td>
-            <td>{{form.description}}</td>
-        </tr>
-        <tr>
-            <td>Total points:</td>
-            <td>{{form.total_points}}</td>
-        </tr>
-        <tr>
-            <td>Module:</td>
-            <td>{{form.module}}</td>
-        </tr>
-    </table>
-    <input type="submit" value="Submit">
-    <style>
-        input[type=text]{width:400px;}
-    </style>
+    <div class="form-group">
+        <label for="title">Title:</label>
+        {{form.title}}
+        <script>$("input[name='title']").addClass("form-control")</script>
+    </div>
+    <div class="form-group">
+        <label for="start_datetime">Start:</label>
+        {{form.start_datetime}}
+        <script>$("input[name='start_datetime']").addClass("form-control")</script>
+    </div>
+    <div class="form-group">
+        <label for="end_datetime">Deadline:</label>
+        {{form.end_datetime}}
+        <script>$("input[name='end_datetime']").addClass("form-control")</script>
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        {{form.description}}
+        <script>$("textarea[name='description']").addClass("form-control")</script>
+    </div>
+    <div class="form-group">
+        <label for="total_points">Total points:</label>
+        {{form.total_points}}
+        <script>$("input[name='total_points']").addClass("form-control")</script>
+    </div>
+    <div class="form-group">
+        <label for="module">Module:</label>
+        {{form.module}}
+        <script>$("select[name='module']").addClass("form-select")</script>
+    </div>
+    <input class="btn btn-primary mt-3" type="submit" value="Submit">
+
     <script>
         document.getElementsByName("start_datetime")[0].type = "datetime-local";
         document.getElementsByName("end_datetime")[0].type = "datetime-local";
