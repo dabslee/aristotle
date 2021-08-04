@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from ..models import Assignment, AssignmentModule, Course, Submission, Grade
 from .. import forms
 
-from .utilities import alwaysContext
+from .utilities import alwaysContext, dateConvert
 
 class StudentAssignmentRow():
     def __init__(self, student, assignment):
