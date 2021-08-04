@@ -5,35 +5,39 @@
 <h2>Assignments</h2>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
-    <a href="{% url 'forum:newassignment' %}"><div class="button">+ New assignment</div></a>
+    <a href="{% url 'forum:newassignment' %}"><div class="btn btn-primary">+ New assignment</div></a>
 </div>
 <form method="POST" action="{% url 'forum:assignments' %}">
     {% csrf_token %}
     <div class="cutebox" style="display: flex; flex-direction: row; align-items: center;">
-        <label>Filter by module: <select name="modulefilter">
+        <label>Filter by module: <select name="modulefilter" class="form-select">
             {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
         </select></label>
-        <input type="submit" value="Submit">
-        <a href="{% url 'forum:assignments' %}"><div class="button" style="background-color: var(--button-red);">Clear</div></a>
+        <input class="btn btn-primary" type="submit" value="Submit">
+        <a href="{% url 'forum:assignments' %}"><div class="btn btn-danger" style="background-color: var(--button-red);">Clear</div></a>
     </div>
 </form>
-<table>
-    <tr>
-        <th>Assignment</th>
-        <th>Start Date</th>
-        <th>Due Date</th>
-        <th>Submitted</th>
-        <th>Graded</th>
-    </tr>
-    {% for assignment in assignments %}
-    <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor:pointer" class="{% if assignment.graded == assignment.submitted %}done{% else %}not-done{% endif %}">
-        <td>{% if assignment.graded != assignment.submitted %}&#8226;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{assignment.title}}</td>
-        <td>{% if assignment.start_datetime != None %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.end_datetime != None %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.submitted != None %}{{assignment.submitted}}{% else %}--{% endif %}/{% if assignment.nostudents != None %}{{assignment.nostudents}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.graded != None %}{{assignment.graded}}{% else %}--{% endif %}/{% if assignment.submitted != None %}{{assignment.submitted}}{% else %}--{% endif %}</td>
-    </tr>
-    {% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Assignment</th>
+            <th>Start Date</th>
+            <th>Due Date</th>
+            <th>Submitted</th>
+            <th>Graded</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for assignment in assignments %}
+        <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor:pointer" class="{% if assignment.graded == assignment.submitted %}done{% else %}not-done{% endif %}">
+            <td>{% if assignment.graded != assignment.submitted %}&#8226;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{assignment.title}}</td>
+            <td>{% if assignment.start_datetime != None %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
+            <td>{% if assignment.end_datetime != None %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
+            <td>{% if assignment.submitted != None %}{{assignment.submitted}}{% else %}--{% endif %}/{% if assignment.nostudents != None %}{{assignment.nostudents}}{% else %}--{% endif %}</td>
+            <td>{% if assignment.graded != None %}{{assignment.graded}}{% else %}--{% endif %}/{% if assignment.submitted != None %}{{assignment.submitted}}{% else %}--{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 <link rel="stylesheet" href="{% static 'css/table.css' %}">
 <link rel="stylesheet" href="{% static 'css/done.css' %}">
