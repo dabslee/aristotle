@@ -127,13 +127,9 @@ h2 {
     opacity: 0.7;
 }
 
-.cutebox {
-    border-radius: 10px;
+.card {
     background-color: var(--light-aristotle-blue);
-    padding: 10px 30px;
-    margin: 10px;
-    flex: 2;
 }
-a .cutebox:hover {
+a .card:hover {
     opacity: 0.7;
 }
