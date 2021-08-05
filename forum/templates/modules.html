@@ -6,16 +6,17 @@
 <form method="POST" action="{% url 'forum:modules' %}">
     {% csrf_token %}
     {% if selected_course.owner == request.user %}
-    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-        <div class="" style="display: flex; flex-direction: row; align-items: center;">
-            <label>Assign selected to module: <select name="moduleassign">
+    <div class="mb-3" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <div class="card" style="max-width: 500px; padding: 10px; flex-direction: row; align-items: center;">
+            <label class="me-3" style="flex-grow: 1; min-width: fit-content">Assign selected to module:</label>
+            <select name="moduleassign" class="form-select">
                 {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
-            </select></label>
-            <input type="submit" value="Submit" name="moduleassign-submit">
-        </div>
+            </select>
+            <input type="submit" value="Submit" name="moduleassign-submit" class="btn btn-primary" style="width: fit-content; height: fit-content">
+        </div>          
         <div style="display: flex; flex-direction: row; align-items: center;">
-            <input onclick="return confirmDelete()" type="submit" value="Delete selected" name="delete-submit" style="background-color: var(--button-red);">
-            <a href="{% url 'forum:createmodule' %}"><div class="button" style="margin-left: 5px">+ New module</div></a>
+            <input onclick="return confirmDelete()" type="submit" value="Delete selected" name="delete-submit" class="btn btn-danger me-2">
+            <a href="{% url 'forum:createmodule' %}"><div class="btn btn-primary">+ New module</div></a>
         </div>
     </div>
     <script>
@@ -28,47 +29,39 @@
         }
     </script>
     {% endif %}
+
+    <div class="accordion" id="module-accordion">
     {% for module in modules %}
-    <div class="cutebox">
-        <h3 id="module-button-{{module.id}}" onclick="toggleCollapse({{module.id}})" style="cursor: pointer; display: flex; flex-direction: row; justify-content: space-between;">
-            <span>{{module.name}}</span>
-            <img src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png"/>
-        </h3>
-        <div id="module-content-{{module.id}}" style="overflow-y: hidden; height: 0px">
-            {% if module.assignments|length == 0 %}
-            <p>Module is empty!</p>
-            {% endif %}
-            {% for assn in module.assignments %}
-            <label><div style="display: flex; flex-direction: row; align-items: center; width: 100%">
-                {% if selected_course.owner == request.user %}
-                <input type="checkbox">
-                {% endif %}
-                <a href='{% url 'forum:assignmentdetails' assn.id %}' style="width: 100%">
-                    <div class="cutebox" style="background-color: var(--main-background-overlay); display: flex; flex-direction: row; justify-content: space-between;">
-                        <span>{{assn.title}}</span>
-                        <span>Due: {{assn.end_datetime}}</span>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="heading{{module.id}}">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{module.id}}" aria-expanded="true" aria-controls="collapse{{module.id}}">
+                    {{module.name}}
+                </button>
+            </h3>
+            <div id="collapse{{module.id}}" class="accordion-collapse collapse show" aria-labelledby="heading{{module.id}}">
+                <div class="accordion-body">
+                    {% if module.assignments|length == 0 %}
+                    <p>Module is empty!</p>
+                    {% endif %}
+                    <div class="list-group">
+                        {% for assn in module.assignments %}
+                        <label class="list-group-item" style="display: flex;">
+                            {% if selected_course.owner == request.user %}
+                            <input class="form-check-input me-3" type="checkbox" value="">
+                            {% endif %}
+                            <a href='{% url 'forum:assignmentdetails' assn.id %}' style="flex: 1 2 auto">
+                                <div class="cutebox" style="background-color: var(--main-background-overlay); display: flex; flex-direction: row; justify-content: space-between;">
+                                    <span>{{assn.title}}</span>
+                                    <span>Due: {{assn.end_datetime}}</span>
+                                </div>
+                            </a>
+                        </label>
+                        {% endfor %}
                     </div>
-                </a>
-            </div></label>
-            {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
-    <script>
-        function toggleCollapse(id){
-            var contentElem = document.getElementById(`module-content-${id}`);
-            var headingElem = document.getElementById(`module-button-${id}`);
-            if (contentElem.style.height == "0px") {
-                contentElem.style.height = "";
-            } else {
-                contentElem.style.height = "0px";
-            }
-        }
-    </script>
-    <style>
-        h3:hover {
-            opacity: 0.5;
-        }
-    </style>
     {% endfor %}
+    </div>
 </form>
 {% endblock %}
