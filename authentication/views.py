@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import Permission, User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.db.models import Q
 
 # Create your views here.
 def signup(request):

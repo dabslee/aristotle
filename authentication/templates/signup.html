@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 {% block content %}
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
-    <p>Username: {{ form.username }}</p>
-    <p>Password: {{ form.password1 }}</p>
-    <p>Confirm password: {{ form.password2 }}</p>
-    <div style="color:red">{% if form.errors %}
+    {{ form|crispy }}
+
+    {% if form.errors %}
+    <div style="color:red">
         {% for field in form %}
             {% for error in field.errors %}
                 <div class="alert alert-danger">
@@ -19,9 +21,10 @@
                 <strong>{{ error|escape }}</strong>
             </div>
         {% endfor %}
-    {% endif %}
     </div>
+    {% endif %}
+
     <br>
-    <input type="submit" value="Sign up" style="margin:0"></input>
+    <input type="submit" value="Sign up" class="btn btn-primary"></input>
   </form>
 {% endblock %}
