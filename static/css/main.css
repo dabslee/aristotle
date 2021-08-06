@@ -119,9 +119,9 @@ h2 {
     color: var(--aristotle-blue-text);
 }
 
-.card {
+.bluecard .card-body {
     background-color: var(--light-aristotle-blue);
 }
-a .card:hover {
+a .card-body:hover {
     opacity: 0.7;
 }

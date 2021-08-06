@@ -9,7 +9,7 @@
 </div>
 <form method="POST" action="{% url 'forum:assignments' %}">
     {% csrf_token %}
-    <div class="card">
+    <div class="card bluecard">
         <div class="card-body">
             <label>Filter by module: <select name="modulefilter" class="form-select">
                 {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
