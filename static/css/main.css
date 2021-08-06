@@ -118,10 +118,3 @@ a {
 h2 {
     color: var(--aristotle-blue-text);
 }
-
-.bluecard .card-body {
-    background-color: var(--light-aristotle-blue);
-}
-a .card-body:hover {
-    opacity: 0.7;
-}

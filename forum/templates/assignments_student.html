@@ -9,7 +9,7 @@
 
 <form method="POST">
     {% csrf_token %}
-    <div class="card bluecard">
+    <div class="card bg-light">
         <div class="card-body">
             <label>Filter by module: <select name="modulefilter" class="form-select">
                 {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
@@ -20,26 +20,39 @@
     </div>
 </form>
 
-<table>
-    <tr>
-        <th>Assignment</th>
-        <th>Start Date</th>
-        <th>Due Date</th>
-        <th>Grade</th>
-        <th>Submitted</th>
-    </tr>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Assignment</th>
+            <th>Start Date</th>
+            <th>Due Date</th>
+            <th>Grade</th>
+            <th>Submitted</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for assignment in assignments %}
-    <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer" class="{% if assignment.submitted %}done{% else %}not-done{% endif %}">
-        <td>{% if not assignment.submitted %}&#8226;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{assignment.title}}</td>
-        <td>{% if assignment.start_datetime %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.end_datetime %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.earned_points %}{{assignment.earned_points}}{% else %}--{% endif %}
-            / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}</td>
-        <td>{% if assignment.submitted %}Yes{% else %}No{% endif %}</td>
-    </tr>
-    <link rel="stylesheet" href="{% static 'css/done.css' %}">
+        <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer">
+            <td>{{assignment.title}}</td>
+            <td>{% if assignment.start_datetime %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
+            <td>{% if assignment.end_datetime %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>
+            <td>{% if assignment.earned_points %}{{assignment.earned_points}}{% else %}--{% endif %}
+                / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}</td>
+            <td>
+                {% if assignment.submitted %}
+                Yes
+                {% else %}
+                <span class="badge bg-danger">No</span>
+                {% endif %}
+            </td>
+        </tr>
     {% endfor %}
+    </tbody>
 </table>
 <link rel="stylesheet" href="{% static 'css/table.css' %}">
-<p><b>Cumulative grade:</b> {{cum_num}}/{{cum_den}} &#8776; {% widthratio cum_num cum_den 100 %}%</p>
+<div class="card">
+    <div class="card-body bg-light">
+        <b>Cumulative grade:</b> {{cum_num}}/{{cum_den}} &#8776; {% widthratio cum_num cum_den 100 %}%
+    </div>
+</div>
 {% endblock %}
