@@ -9,7 +9,7 @@
 
 <div class="list-group mb-3">
     {% for course in courses %}
-    <a href="{% url 'forum:setcourse' course.id %}" class="list-group-item list-group-item-action{% ifequal selected_course.id course.id %} active{% endifequal %}">
+    <a href="{% url 'forum:setcourse' course.id %}" class="list-group-item list-group-item-action{% ifequal selected_course.id course.id %} list-group-item-primary{% endifequal %}">
         {{course.name}}
     </a>
     {% endfor %}
