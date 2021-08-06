@@ -119,14 +119,6 @@ h2 {
     color: var(--aristotle-blue-text);
 }
 
-#fullcontainer a {
-    color: var(--aristotle-blue-text);
-    text-decoration: none;
-}
-#fullcontainer a:hover {
-    opacity: 0.7;
-}
-
 .card {
     background-color: var(--light-aristotle-blue);
 }
