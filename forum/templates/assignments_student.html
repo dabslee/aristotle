@@ -6,16 +6,20 @@
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
 </div>
+
 <form method="POST">
     {% csrf_token %}
-    <div class="cutebox" style="display: flex; flex-direction: row; align-items: center;">
-        <label>Filter by module: <select name="modulefilter">
-            {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
-        </select></label>
-        <input class="btn btn-primary" type="submit" value="Submit">
-        <a href=""><div class="button" style="background-color: var(--button-red);">Clear</div></a>
+    <div class="card bluecard">
+        <div class="card-body">
+            <label>Filter by module: <select name="modulefilter" class="form-select">
+                {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
+            </select></label>
+            <input class="btn btn-primary" type="submit" value="Submit">
+            <a href=""><div class="btn btn-danger" style="background-color: var(--button-red);">Clear</div></a>
+        </div>
     </div>
 </form>
+
 <table>
     <tr>
         <th>Assignment</th>
