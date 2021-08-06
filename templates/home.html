@@ -6,9 +6,9 @@
 <p>
     Welcome to <a href="{% url 'home' %}">aristotle.com</a>, a free learning management system for tutors, parents, and students. <a href="{% url 'authentication:login' %}">Log in</a> or <a href="{% url 'authentication:signup' %}">register</a> in order to get started.
 </p>
-<div style="display: flex; flex-direction: row;">
-    <a href="{% url 'authentication:login' %}"><div class="button" style="margin-right: 10px">Log In</div></a>
-    <a href="{% url 'authentication:signup' %}"><div class="button">Sign Up</div></a>
+<div style="display: flex; flex-direction: row;" class="mb-4">
+    <a href="{% url 'authentication:login' %}"><div class="btn btn-primary me-2">Log In</div></a>
+    <a href="{% url 'authentication:signup' %}"><div class="btn btn-primary">Sign Up</div></a>
 </div>
 {% include 'devnotes.html' %}
 {% endblock %}
