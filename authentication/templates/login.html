@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 {% block content %}
   <h2>Login</h2>
   <form method="post">
     {% csrf_token %}
-    <p>Username: {{ form.username }}</p>
-    <p>Password: {{ form.password }}</p>
+    <p>{{ form.username|as_crispy_field }}</p>
+    <p>{{ form.password|as_crispy_field }}</p>
     <div style="color:red">{% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
@@ -20,7 +22,6 @@
         {% endfor %}
     {% endif %}
     </div>
-    <br>
-    <input type="submit" value="Login" style="margin:0"></input>
+    <input type="submit" value="Login" class="btn btn-primary"></input>
   </form>
 {% endblock %}
