@@ -16,7 +16,8 @@
 <form action="{% url 'forum:newsubmission' assignment.id %}" method="post">
     {% csrf_token %}
     <h3>Text submission:</h3>
-    {{form.details}}<br>
-    <input type="submit" value="Submit">
+    {{form.details}}
+    <script>$("textarea[name='details']").addClass("form-control")</script>
+    <input type="submit" value="Submit" class="btn btn-primary mt-3">
 </form>
 {% endblock %}
