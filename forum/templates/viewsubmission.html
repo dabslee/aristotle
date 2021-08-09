@@ -6,16 +6,26 @@
 <p>No submissions yet!</p>
 {% endif %}
 {% for submission in submissions %}
-<div class="cutebox">
-    <p><i>{{submission.submit_datetime}}</i></p>
-    <p>{{submission.details|linebreaksbr}}</p>
+<div class="card">
+    <div class="card-header"><i>{{submission.submit_datetime}}</i></div>
+    <div class="card-body">{{submission.details|linebreaksbr}}</div>
 </div>
 {% endfor %}
 <h2>Grade and Feedback</h2>
 <form action="{% url 'forum:viewsubmission' assignment_id=assignment.id student_id=student.id %}" method="POST">
     {% csrf_token %}
-    <b>Grade:</b><br><input type="number" step="any" name="grade" value="{{grade.earned_points}}"> / {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}<br><br>
-    <b>Feedback:</b><br><textarea name="feedback" style="min-height:150px">{% if grade.feedback %}{{grade.feedback}}{% endif %}</textarea><br>
-    <input type="submit" value="Save feedback">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--aristotle-blue)">{% if savedmessage %}{{savedmessage}}{% endif %}</span>
+    <label class="form-label">Grade: </label>
+    <div class="input-group" style="width: 200px">
+        <input class="form-control" type="number" step="any" name="grade" value="{{grade.earned_points}}">
+        <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">/ {% if assignment.total_points %}{{assignment.total_points}}{% else %}--{% endif %}</span>
+        </div>
+    </div>
+    <label class="form-label">Feedback: </label>
+    <textarea class="form-control" name="feedback" rows="4" columns="50">{% if grade.feedback %}{{grade.feedback}}{% endif %}</textarea><br>
+    <input class="btn btn-primary mb-2" type="submit" value="Save feedback">
+    {% if savedmessage %}
+    <div class="alert alert-success">{{savedmessage}}</div>
+    {% endif %}
 </form>
 {% endblock %}
