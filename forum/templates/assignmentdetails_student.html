@@ -15,15 +15,15 @@
 <p>{{assignment.description |linebreaksbr |safe}}</p>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     <h3>Submissions:</h3>
-    <a href="{% url 'forum:newsubmission' assignment.id %}"><div class="button">New submission</div></a>
+    <a href="{% url 'forum:newsubmission' assignment.id %}"><div class="btn btn-primary mb-2">+ New submission</div></a>
 </div>
 {% if submissions|length == 0 %}
 No submissions yet!
 {% endif %}
 {% for submission in submissions %}
-<div class="cutebox">
-    <p><i>{{submission.submit_datetime}}</i></p>
-    <p>{{submission.details}}</p>
+<div class="card">
+    <div class="card-header"><i>{{submission.submit_datetime}}</i></div>
+    <div class="card-body">{{submission.details|linebreaksbr}}</div>
 </div>
 {% endfor %}
 {% endblock %}
