@@ -15,16 +15,14 @@
         <link rel="icon" href="{% static 'img/favicon.ico' %}">
     </head>
     <body>
-        <a href="{% url 'home' %}">
-            <div id=pagehead>
-                <div style="display:flex; flex-direction: row; align-items: center;">
-                    aristotle°
-                </div>
-                <div style="font-weight: normal">
-                    {{selected_course.name}}
-                </div>
+        <div id=pagehead>
+            <div style="display:flex; flex-direction: row; align-items: center;">
+                <a href="{% url 'home' %}" style="color: white">aristotle°</a>
             </div>
-        </a>
+            <div style="font-weight: normal">
+                {{selected_course.name}}
+            </div>
+        </div>
         <div id="fullcontainer">
             {% if username %}
             <div id="navbar">

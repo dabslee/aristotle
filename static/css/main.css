@@ -5,7 +5,6 @@
     --fog-gray: #c4d3dd;
     --dark-fog-gray: #a0b5c4;
     --extra-dark-fog-gray: #7c8b96;
-    --main-margin: 50px;
     --button-green: #33aa33;
     --button-red: #df3838;
 
@@ -40,11 +39,12 @@ html {
 
 body {
     background-color: var(--main-background);
-    margin: 0px;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
     color: var(--black-text);
+    
+    margin: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 #pagehead {
@@ -52,7 +52,8 @@ body {
     background-color: var(--aristotle-blue);
     font-size: xx-large;
     font-weight: bold;
-    padding: var(--main-margin);
+
+    padding: 50px;
     padding-bottom: 20px;
     justify-content: space-between;
     display: flex;
@@ -61,31 +62,35 @@ body {
 
 #fullcontainer {
     background-color: var(--main-background);
+
     display: flex;
     flex-direction: row;
     flex: 1;
 }
 
 #pagefoot {
+    color: var(--always-white);
+    background-color: var(--extra-dark-fog-gray);
+
     display: flex;
     flex-direction: row;
     padding: 30px;
     min-height: fit-content;
     align-items: center;
     justify-content: space-between;
-    color: var(--always-white);
-    background-color: var(--extra-dark-fog-gray);
 }
 
 #content {
     background-color: var(--main-background);
-    margin: var(--main-margin);
+
+    margin: 50px;
     width: 100%;
     height: fit-content;
 }
 
 #navbar {
     background-color: var(--fog-gray);
+    
     height: 100%;
     display: flex;
     flex-direction: column;

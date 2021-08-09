@@ -26,7 +26,7 @@ from . import secret_key
 SECRET_KEY = secret_key.secret_key_secure
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
