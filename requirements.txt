@@ -4,4 +4,3 @@ Django
 psycopg2-binary
 whitenoise
 django-crispy-forms
-django-quill-editor
