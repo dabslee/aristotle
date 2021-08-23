@@ -18,7 +18,10 @@ Students
 
 <p>To invite a student to join this course (<b>{{selected_course.name}}</b>), ask them to enter the following UUID on their "Courses" page:</p>
 <div class="card bg-light" style="user-select: all;" onclick="copy()">
-    <code class="card-body">{{selected_course.uuid}}</code>
+    <div class="card-body">
+        <i class="bi bi-clipboard text-muted me-3"></i>
+        <code>{{selected_course.uuid}}</code>
+    </div>
 </div>
 
 <script>
