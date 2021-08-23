@@ -12,9 +12,14 @@ class ModuleWrapper():
         self.assignments = assignments
 def modules(request):
     if not request.user.is_authenticated:
-        return redirect('home')
+        return redirect('home')        
     context = alwaysContext(request)
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    if request.method == "POST":
+        for assn in Assignment.objects.filter(course=course):
+            if request.POST.get(f"assignment-checkbox-{assn.id}") == "checked":
+                assn.module = AssignmentModule.objects.get(id=int(request.POST.get("moduleassign")))
+                assn.save()
     context["modules"] = [ModuleWrapper("No module", 0, Assignment.objects.filter(course=course, module=None))]
     for module in AssignmentModule.objects.filter(course=course):
         context["modules"].append(ModuleWrapper(module.name, module.id, Assignment.objects.filter(course=course, module=module).order_by("end_datetime")))

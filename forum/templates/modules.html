@@ -51,7 +51,7 @@
                         {% for assn in module.assignments %}
                         <label class="list-group-item" style="display: flex;">
                             {% if selected_course.owner == request.user %}
-                            <input class="form-check-input me-3" type="checkbox" value="">
+                            <input name="assignment-checkbox-{{assn.id}}" class="form-check-input me-3" type="checkbox" value="checked">
                             {% endif %}
                             <a href='{% url 'forum:assignmentdetails' assn.id %}' style="flex: 1 2 auto">
                                 <div class="cutebox" style="background-color: var(--main-background-overlay); display: flex; flex-direction: row; justify-content: space-between;">
