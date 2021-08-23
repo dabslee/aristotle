@@ -51,6 +51,8 @@ class Assignment(models.Model):
     end_datetime = models.DateTimeField(null=True, blank=True)
     description = models.TextField(max_length=10000, blank=True)
     total_points = models.FloatField(null=True, blank=True)
+    class Meta:
+        ordering = ['end_datetime']
 
 class Grade(models.Model):
     student = models.ForeignKey(
