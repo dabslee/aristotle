@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+Grades
+{% endblock %}
+
 {% block content %}
 <h2>{{student.username}}'s Assignments</h2>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">

@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
+{% block title %}
+Create Module
+{% endblock %}
+
 {% block content %}
 <h2>Create a new module</h2>
 <form action="{% url 'forum:createmodule' %}" method="post" class="form">

@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+Assignment Details
+{% endblock %}
+
 {% block content %}
 <form action="{% url 'forum:assignmentdetails' assignment.id %}" method="POST">
     {% csrf_token %}

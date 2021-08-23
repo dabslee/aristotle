@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Courses
+{% endblock %}
+
 {% block content %}
 <h2>Your Courses</h2>
 {% if courses|length > 0 %}<p>View your courses below! Click on the course title to select that course.</p>{% else %}<p>No courses yet!</p>{% endif %}

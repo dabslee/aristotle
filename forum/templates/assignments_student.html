@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+{{page_title}}
+{% endblock %}
+
 {% block content %}
 <h2>{{page_title}}</h2>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
