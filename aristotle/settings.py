@@ -33,10 +33,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
     'authentication',
     'forum',
     'crispy_forms',
-    'django.contrib.admin',
+    'django_quill',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
