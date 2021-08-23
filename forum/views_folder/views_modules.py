@@ -18,7 +18,11 @@ def modules(request):
     if request.method == "POST":
         for assn in Assignment.objects.filter(course=course):
             if request.POST.get(f"assignment-checkbox-{assn.id}") == "checked":
-                assn.module = AssignmentModule.objects.get(id=int(request.POST.get("moduleassign")))
+                moduleid = int(request.POST.get("moduleassign"))
+                if moduleid == 0:
+                    assn.module = None
+                else:
+                    assn.module = AssignmentModule.objects.get(id=moduleid)
                 assn.save()
     context["modules"] = [ModuleWrapper("No module", 0, Assignment.objects.filter(course=course, module=None))]
     for module in AssignmentModule.objects.filter(course=course):
