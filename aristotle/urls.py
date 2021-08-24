@@ -23,4 +23,5 @@ urlpatterns = [
     path('', core_views.home, name='home'),
     path('authentication/', include('authentication.urls'), name='authentication'),
     path('forum/', include('forum.urls'), name='forum'),
+    path('tinymce/', include('tinymce.urls')),
 ]
