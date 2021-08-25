@@ -97,4 +97,4 @@ class Submission(models.Model):
     submit_datetime = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
-        return self.assignment.name + " [submission] id: " + self.id
+        return self.assignment.title + " [submission] id: " + self.id
