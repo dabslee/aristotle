@@ -11,7 +11,7 @@ class JoinCourseForm(forms.Form):
     uuid = forms.UUIDField()
 
 class NewSubmission(forms.Form):
-    details = forms.CharField(max_length=10000, widget=forms.Textarea)
+    details = QuillFormField()
 
 class CreateAssignmentForm(forms.Form):
     title = forms.CharField(max_length=100)

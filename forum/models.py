@@ -81,5 +81,5 @@ class Submission(models.Model):
         on_delete=models.CASCADE,
         related_name="submission_of_assignment"
     )
-    details = models.TextField(max_length=10000, blank=True)
+    details = QuillField()
     submit_datetime = models.DateTimeField(auto_now_add=True, blank=True)
