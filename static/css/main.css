@@ -122,6 +122,6 @@ a {
 .ql-editor {
     min-height: 200px;
 }
-.django-quill-widget {
+.django-quill-widget, .ql-container, .ql-snow {
     height: fit-content;
 }
