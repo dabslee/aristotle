@@ -16,7 +16,14 @@ New Submission
     {% endif %}
 </i></p>
 <h3>Description:</h3>
-<p>{{assignment.description |linebreaksbr |safe}}</p>
+<div class="card mb-3">
+    <div class="card-body bg-light">
+        {% autoescape off %}
+        {{assignment.description.html |safe}}
+        {% endautoescape %}
+        <style>.card-body p {margin: 0}</style>
+    </div>
+</div>
 <form action="{% url 'forum:newsubmission' assignment.id %}" method="post">
     {% csrf_token %}
     <h3>Text submission:</h3>

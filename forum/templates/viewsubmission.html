@@ -10,9 +10,14 @@ View Submission
 <p>No submissions yet!</p>
 {% endif %}
 {% for submission in submissions %}
-<div class="card">
+<div class="card mb-3">
     <div class="card-header"><i>{{submission.submit_datetime}}</i></div>
-    <div class="card-body">{{submission.details|linebreaksbr}}</div>
+    <div class="card-body">
+        {% autoescape off %}
+        {{submission.details.html |safe}}
+        {% endautoescape %}
+        <style>.card-body p {margin: 0}</style>
+    </div>
 </div>
 {% endfor %}
 <h2>Grade and Feedback</h2>
