@@ -22,6 +22,9 @@ class Course(models.Model):
         editable=False
     )
 
+    def __str__(self):
+        return self.name
+
 class AssignmentModule(models.Model):
     name = models.CharField(max_length=100)
     course = models.ForeignKey(
@@ -35,6 +38,9 @@ class AssignmentModule(models.Model):
                 name='unique name'
             )
         ]
+    
+    def __str__(self):
+        return self.name
 
 class Assignment(models.Model):
     course = models.ForeignKey(
@@ -55,6 +61,9 @@ class Assignment(models.Model):
     total_points = models.FloatField(null=True, blank=True)
     class Meta:
         ordering = ['end_datetime']
+    
+    def __str__(self):
+        return self.title
 
 class Grade(models.Model):
     student = models.ForeignKey(
@@ -70,6 +79,9 @@ class Grade(models.Model):
     earned_points = models.FloatField(null=True, blank=True)
     feedback = models.CharField(max_length=1000, null=True, blank=True)
 
+    def __str__(self):
+        return self.assignment.name + " [grade]"
+
 class Submission(models.Model):
     student = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -83,3 +95,6 @@ class Submission(models.Model):
     )
     details = QuillField()
     submit_datetime = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return self.assignment.name + " [submission] id: " + self.id
