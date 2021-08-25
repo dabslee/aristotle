@@ -16,7 +16,13 @@ Assignment Details
     {% endif %}
 </i></p>
 <h3>Description:</h3>
-<p>{{assignment.description |linebreaksbr |safe}}</p>
+<div class="card mb-3">
+    <div class="card-body bg-light">
+        {% autoescape off %}
+        {{assignment.description.html |safe}}
+        {% endautoescape %}
+    </div>
+</div>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     <h3>Submissions:</h3>
     <a href="{% url 'forum:newsubmission' assignment.id %}"><div class="btn btn-primary mb-2">+ New submission</div></a>

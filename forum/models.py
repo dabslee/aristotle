@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 import uuid
 
+from django_quill.fields import QuillField
+
 # Create your models here.
 class Course(models.Model):
     name = models.CharField(max_length=100)
@@ -49,7 +51,7 @@ class Assignment(models.Model):
     title = models.CharField(max_length=100)
     start_datetime = models.DateTimeField(null=True, blank=True)
     end_datetime = models.DateTimeField(null=True, blank=True)
-    description = models.TextField(max_length=10000, blank=True)
+    description = QuillField()
     total_points = models.FloatField(null=True, blank=True)
     class Meta:
         ordering = ['end_datetime']
