@@ -10,23 +10,57 @@ Assignment Details
     {% csrf_token %}
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <div>
-            <div class="form-group row">
-                <h2 class="col-sm-5">Assignment name:</h2>
-                <div class="col-sm-7">
-                    <input class="form-control form-control-lg" name="title" type="text" value="{{assignment.title}}"></input>
-                </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                {{form.title}}
+                <script>
+                    $("input[name='title']").addClass("form-control")
+                    $("input[name='title']").val("{{assignment.title}}")
+                </script>
             </div>
-            <label class="form-label">Start date: </label><input class="form-control" name="start" type="datetime-local" value="{{assignment.start_datetime|date:'Y-m-d\TH:i'}}"></input>
-            <label class="form-label">End date: </label><input class="form-control" name="end" type="datetime-local" value="{{assignment.end_datetime|date:'Y-m-d\TH:i'}}"></input><br>
-            <label class="form-label">Total points: </label><input class="form-control" name="points" type="number" value="{{assignment.total_points}}"></input><br>
-            <label class="form-label">Module: </label><select name="module" class="form-select">
-                <option value="No module">No module</option>
-                {% for assnmodule in modules %}
-                <option value="{{assnmodule}}"{% if modulename == assnmodule %}selected{% endif %}>{{assnmodule}}</option>
-                {% endfor %}
-            </select>
-            <label class="form-label">Description: </label>
-            <textarea name="description" class="form-control" rows="10" cols="100">{{assignment.description}}</textarea>
+            <div class="form-group">
+                <label for="start_datetime">Start:</label>
+                {{form.start_datetime}}
+                <script>
+                    $("input[name='start_datetime']").addClass("form-control")
+                    $("input[name='start_datetime']").val("{{assignment.start_datetime|date:'Y-m-d\TH:i'}}")
+                </script>
+            </div>
+            <div class="form-group">
+                <label for="end_datetime">Deadline:</label>
+                {{form.end_datetime}}
+                <script>
+                    $("input[name='end_datetime']").addClass("form-control")
+                    $("input[name='end_datetime']").val("{{assignment.end_datetime|date:'Y-m-d\TH:i'}}")
+                </script>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                {% autoescape off %}
+                {{form.description}}
+                <script>
+                    $(".ql-editor").html("{{assignment.description.html}}")
+                </script>
+                {% endautoescape %}
+            </div>
+            <div class="form-group">
+                <label for="total_points">Total points:</label>
+                {{form.total_points}}
+                <script>
+                    $("input[name='total_points']").addClass("form-control")
+                    $("input[name='total_points']").val("{{assignment.total_points}}")
+                </script>
+            </div>
+            <div class="form-group">
+                <label for="module">Module:</label>
+                {{form.module}}
+                <script>
+                    $("select[name='module']").addClass("form-select")
+                    {% for assnmodule in modules %}
+                    document.getElementsByName("module")[0].innerHTML += `<option value="{{assnmodule}}">{{assnmodule}}</option>`;
+                    {% endfor %}
+                </script>
+            </div>
         </div>
         <div class="btn btn-danger" onclick="delete_assn()" style="height: fit-content">Delete assignment</div>
         <script>
@@ -70,4 +104,11 @@ Assignment Details
     </tbody>
 </table>
 <link rel="stylesheet" href="{% static 'css/table.css' %}">
+
+<script>
+    document.getElementsByName("start_datetime")[0].type = "datetime-local";
+    document.getElementsByName("end_datetime")[0].type = "datetime-local";
+    document.getElementsByTagName("select")[0].innerHTML += `<option value="No module">No module</option>`;
+</script>
+
 {% endblock %}

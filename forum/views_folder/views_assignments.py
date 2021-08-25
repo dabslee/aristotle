@@ -132,16 +132,18 @@ def assignmentdetails(request, assignment_id):
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     if course != assignment.course:
         return redirect('home')
-    
+
     if request.method == "POST":
-        assignment.title = request.POST['title']
-        assignment.start_datetime = dateConvert(request.POST['start'])
-        assignment.end_datetime = dateConvert(request.POST['end'])
-        assignment.description = request.POST['description']
-        assignment.total_points = request.POST['points'] if request.POST['points']!="" else None
-        assignment.module=AssignmentModule.objects.filter(name=request.POST['module'], course=course).first()
-        assignment.save()
-        context["savedmessage"] = "Changes saved."
+        form = forms.CreateAssignmentForm(request.POST)
+        if form.is_valid():
+            assignment.title=form.cleaned_data['title'],
+            assignment.start_datetime=form.cleaned_data['start_datetime'],
+            assignment.end_datetime=form.cleaned_data['end_datetime'],
+            assignment.description=form.cleaned_data['description'],
+            assignment.total_points=form.cleaned_data['total_points'],
+            assignment.course=course,
+            assignment.module=AssignmentModule.objects.filter(name=form.cleaned_data['module'], course=course).first(),
+            context["savedmessage"] = "Changes saved."
     
     context["assignment"] = assignment
     context["modulename"] = assignment.module.name if assignment.module else "No module"
@@ -151,6 +153,7 @@ def assignmentdetails(request, assignment_id):
         for student in User.objects.filter(course_of_student=course):
             context["students"].append(SubmissionRow(student, assignment))
         context["modules"] = [module.name for module in AssignmentModule.objects.filter(course=course)]
+        context["form"] = forms.CreateAssignmentForm()
         return render(request, "assignmentdetails_teacher.html", context)
     else:
         context["grade"] = Grade.objects.filter(Q(assignment_id=assignment_id) & Q(student=request.user))
