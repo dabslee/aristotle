@@ -165,8 +165,8 @@ def assignmentdetails(request, assignment_id):
             "end_datetime" : assignment.end_datetime,
             "description" : assignment.description,
             "total_points" : assignment.total_points,
-            "module" : assignment.module
         })
+        context["curr_module"] = assignment.module
         return render(request, "assignmentdetails_teacher.html", context)
     else:
         context["grade"] = Grade.objects.filter(Q(assignment_id=assignment_id) & Q(student=request.user))
