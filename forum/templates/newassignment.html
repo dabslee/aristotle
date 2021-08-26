@@ -42,11 +42,11 @@ New Assignment
     <script>
         document.getElementsByName("start_datetime")[0].type = "datetime-local";
         document.getElementsByName("end_datetime")[0].type = "datetime-local";
-        document.getElementsByTagName("select")[0].innerHTML += `<option value="No module">No module</option>`;
+        document.getElementsByName("module")[0].innerHTML += `<option value="No module"></option>`;
     </script>
     {% for assnmodule in modules %}
     <script>
-        document.getElementsByTagName("select")[0].innerHTML += `<option value="{{assnmodule}}">{{assnmodule}}</option>`;
+        document.getElementsByName("module")[0].innerHTML += `<option value="{{assnmodule}}">{{assnmodule}}</option>`;
     </script>
     {% endfor %}
 </form>
