@@ -7,36 +7,18 @@ People
 {% block content %}
 <h2>People</h2>
 
-<div class="mb-3" style="display: flex; flex-direction: row; flex-wrap: wrap;">
-    <div class="card me-3" style="width: 45%">
-        <div class="card-header">
-            Students
-        </div>
-        <div class="card-body">
-            {% if students|length > 0 %}<p>The students in <b>{{selected_course.name}}</b>. Click on the student to view their grades.</p>{% else %}<p>No students yet!</p>{% endif %}
-            <div class="list-group mb-3">
-                {% for student in students %}
-                <a href="{% url 'forum:studentgrades' student.id %}" class="list-group-item list-group-item-action">
-                    {{student.username}}
-                </a>
-                {% endfor %}
-            </div>
-        </div>
+<div class="card me-3 mb-3">
+    <div class="card-header">
+        Students
     </div>
-    
-    <div class="card" style="width: 45%">
-        <div class="card-header">
-            Co-teachers
-        </div>
-        <div class="card-body">
-            {% if coteachers|length > 0 %}<p>The co-teachers for <b>{{selected_course.name}}</b>. Click on the co-teacher to manage their permissions.</p>{% else %}<p>No co-teachers yet!</p>{% endif %}
-            <div class="list-group mb-3">
-                {% for coteacher in coteachers %}
-                <a href="{% url 'forum:studentgrades' student.id %}" class="list-group-item list-group-item-action">
-                    {{coteacher.username}}
-                </a>
-                {% endfor %}
-            </div>
+    <div class="card-body">
+        {% if students|length > 0 %}<p>The students in <b>{{selected_course.name}}</b>. Click on the student to view their grades.</p>{% else %}<p>No students yet!</p>{% endif %}
+        <div class="list-group mb-3">
+            {% for student in students %}
+            <a href="{% url 'forum:studentgrades' student.id %}" class="list-group-item list-group-item-action">
+                {{student.username}}
+            </a>
+            {% endfor %}
         </div>
     </div>
 </div>
