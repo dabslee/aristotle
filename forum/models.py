@@ -50,7 +50,7 @@ class Assignment(models.Model):
     )
     module = models.ForeignKey(
         AssignmentModule,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='assignments_of_module',
         null=True
     )

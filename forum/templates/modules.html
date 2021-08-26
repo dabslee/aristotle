@@ -22,20 +22,8 @@ Modules
             </div>
         </div>
 
-        <div style="display: flex; flex-direction: row; align-items: center;">
-            <input onclick="return confirmDelete()" type="submit" value="Delete selected" name="delete-submit" class="btn btn-danger me-2">
-            <a href="{% url 'forum:createmodule' %}"><div class="btn btn-primary">+ New module</div></a>
-        </div>
+        <a href="{% url 'forum:createmodule' %}"><div class="btn btn-primary">+ New module</div></a>
     </div>
-    <script>
-        function confirmDelete() {
-            if (confirm("Are you sure you would like to delete these items? This action is irreversible.")) {
-                $("input[name='delete-submit']").submit();
-            } else {
-                return false;
-            }
-        }
-    </script>
     {% endif %}
 
     <div class="accordion" id="module-accordion">
