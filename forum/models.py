@@ -17,6 +17,11 @@ class Course(models.Model):
         related_name='course_of_student',
         blank=True
     )
+    coteachers = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='course_of_coteacher',
+        blank=True
+    )
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False
