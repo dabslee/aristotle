@@ -150,6 +150,8 @@ def assignmentdetails(request, assignment_id):
             assignment.module=AssignmentModule.objects.filter(name=form.cleaned_data['module'], course=course).first()
             assignment.save()
             context["savedmessage"] = "Changes saved."
+        else:
+            print(form.errors.values())
     
     context["assignment"] = assignment
     context["modulename"] = assignment.module.name if assignment.module else "No module"

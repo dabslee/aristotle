@@ -17,6 +17,6 @@ class CreateAssignmentForm(forms.Form):
     title = forms.CharField(max_length=100)
     start_datetime = forms.DateTimeField(required=False)
     end_datetime = forms.DateTimeField(required=False)
-    description = QuillFormField()
+    description = QuillFormField(required=False)
     total_points = forms.FloatField(required=False)
-    module = forms.ChoiceField(required=False, widget=forms.Select)
+    module = forms.CharField(required=False, widget=forms.Select)
