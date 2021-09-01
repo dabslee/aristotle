@@ -32,10 +32,15 @@
                     <a href="{% url 'authentication:signup' %}" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
-            <div id="splash-footer">
-                <a href="">View GitHub</a>
+            <div id="splash-footer" class="mt-2">
+                <a href="https://github.com/dabslee/aristotle/blob/master/README.md" target="_new" class="link-secondary">Help</a>
+                <span class="ms-2 me-2">&#8226;</span>
+                <a href="https://github.com/dabslee/aristotle" target="_new" class="link-secondary">View GitHub</a>
+                <span class="ms-2 me-2">&#8226;</span>
+                <a href="https://github.com/dabslee/aristotle/issues" target="_new" class="link-secondary">Send Feedback</a>
             </div>
         </div>
+        <a href="http://brandonssandbox.com/" target="_new" class="link-secondary" style="position:absolute; bottom: 10px; right: 15px;">© Brandon Lee, 2021. All rights reserved.</a>
     </body>
     <style>
         html {
@@ -57,6 +62,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             z-index: 2;
         }
         #splash-box {
@@ -73,7 +79,16 @@
             width: 70%;
         }
         #splash-footer {
-            
+            display: flex;
+            flex-direction: row;
+            width: fit-content;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .link-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </html>
