@@ -12,8 +12,6 @@ To get started, just navigate to [aristotle.brandonssandbox.com](http://aristotl
 
 Once you sign up once, you should be able to log in with your already created account in the future by pressing the "Log in" button.
 
-Read more about the website's features and how to use them in the user guide!
-
 ## Demo/Example
 If you're just checking this project out, you might not want to go through the whole process of creating an account, a course, and various assignments to check out this website's features. Fortunately, I've created a demo/example course, which you access as either the course owner/teacher or as a student. The login credentials for each are listed below:
 > <b>Course owner</b><br>
