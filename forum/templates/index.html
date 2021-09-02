@@ -5,8 +5,90 @@ Home
 {% endblock %}
 
 {% block content %}
-<h2>HQ</h2>
-<p>
-    Welcome to your <b>aristotle</b> HQ! Use the navigation bar to the left to manage your courses and students.
-</p>
+<div style="display: flex; flex-direction: row; flex-wrap: wrap">
+    <div style="display: flex; flex-direction: column; flex: 2 2 auto">
+        <div>
+            <h2>HQ</h2>
+            <p>
+                Welcome to your <b>aristotle</b> HQ! Use the navigation bar to the left to manage your courses and students.
+            </p>
+        </div>
+        <div style="max-width: 800px">
+            <div class="card placard">
+                <div class="card-body" style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div>
+                        <h5 class="card-title">Project README</h5>
+                        <p>Check out the project's README.md on GitHub to learn about aristotle° as a programming project.</p>
+                    </div>
+                    <h2 class="bi bi-journal-text text-muted"></h2>
+                </div>
+            </div>
+            <div class="card placard">
+                <div class="card-body" style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div>
+                        <h5 class="card-title">User Guide</h5>
+                        <p>Whether you're new to aristotle° or just want to learn how to use it better, check out this user guide to become an aristotle° expert.</p>
+                    </div>
+                    <h2 class="bi bi-clipboard-check text-muted"></h2>
+                </div>
+            </div>
+            <div class="card placard">
+                <div class="card-body" style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div>
+                        <h5 class="card-title">Dev Notes</h5>
+                        <p>Check out the development notes to view previous versions of this project and keep track of feature additions.</p>
+                    </div>
+                    <h2 class="bi bi-window-sidebar text-muted"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="flex: 0 2 700px">
+        <div class="card">
+            <div class="card-header">Upcoming assignments</div>
+            <div class="card-body" style="padding: 15px 30px">
+                <a href="" class="item">
+                    <span>Assignment1</span>
+                    <span>Due date</span>
+                </a>
+                <a href="" class="item">
+                    <span>Assignment2</span>
+                    <span>Due date 2</span>
+                </a>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">Quick links</div>
+            <div class="card-body" style="padding: 15px 30px">
+                <a href="" class="item">
+                    <span>Quick </span>
+                    <i class="bi bi-x link-secondary"></i>
+                </a>
+                <a href="" class="item">
+                    <span>Course 2</span>
+                    <i class="bi bi-x link-secondary"></i>
+                </a>
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;" class="mt-2">
+                    <input type="text" class="form-control form-control-sm me-2" style="flex: 2 2 auto">
+                    <div class="btn btn-secondary btn-sm">Add</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .placard {
+        cursor: pointer;
+        margin-right: 50px;
+        margin-bottom: 15px;
+    }
+    .placard:hover {
+        box-shadow: 5px 5px 20px rgba(0,0,0,0.1);
+    }
+    .item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+</style>
 {% endblock %}
