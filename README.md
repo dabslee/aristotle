@@ -1,7 +1,8 @@
 # aristotle°
 
 [![GitHub release](https://img.shields.io/github/release/dabslee/aristotle?include_prereleases=&sort=semver)](https://github.com/dabslee/aristotle/releases/)
-[![License](https://img.shields.io/badge/License-Apache--2.0_License-blue)](#license)
+[![License](https://img.shields.io/badge/License-Apache--2.0_License-blue?logo=apache)](https://github.com/dabslee/aristotle/blob/master/LICENSE)
+<img src="https://img.shields.io/badge/-%230C4B33?style=flat-square&logo=django&logoColor=white"><img src="https://img.shields.io/badge/-blueviolet?style=flat-square&logo=bootstrap&logoColor=white">
 
 A free, open-source learning management system (LMS) built on Python's Django framework. Uses Bootstrap v5.0 as a CSS template.
 
