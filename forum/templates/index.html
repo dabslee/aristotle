@@ -56,20 +56,27 @@ Home
             </div>
         </div>
         <div class="card mt-3">
-            <div class="card-header">Quick links</div>
+            <div class="card-header">Pinned Courses</div>
             <div class="card-body" style="padding: 15px 30px">
-                <a href="" class="item">
-                    <span>Quick </span>
-                    <i class="bi bi-x link-secondary"></i>
-                </a>
-                <a href="" class="item">
-                    <span>Course 2</span>
-                    <i class="bi bi-x link-secondary"></i>
-                </a>
-                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;" class="mt-2">
-                    <input type="text" class="form-control form-control-sm me-2" style="flex: 2 2 auto">
-                    <div class="btn btn-secondary btn-sm">Add</div>
+                {% for course in pinnedcourses %}
+                <div class="item">
+                    <a href="{% url 'forum:setcourse' course.id %}">{{course.name}}</span>
+                    <a href="{% url 'forum:removefrompinned' course.id %}"><i class="bi bi-x link-secondary"></i></a>
                 </div>
+                {% endfor %}
+                {% if pinnedcourses|length == 0 %}
+                <p>No pinned courses yet!</p>
+                {% endif %}
+                <form action="{% url 'forum:index' %}" method="post" style="display: flex; flex-direction: row; align-items: center; justify-content: center;" class="mt-2">
+                    {% csrf_token %}
+                    <select name="pinselect" class="form-select form-select-sm me-2" style="flex: 2 2 auto">
+                        <option value="" disabled selected>Select a course</option>
+                        {% for course in courses %}
+                        <option value="{{course.id}}">{{course.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" class="btn btn-secondary btn-sm" value="Pin"></input>
+                </form>
             </div>
         </div>
     </div>

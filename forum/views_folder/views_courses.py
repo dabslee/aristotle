@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 
-from ..models import Course
+from ..models import Course, UserData
 from .. import forms
 
 from .utilities import alwaysContext
@@ -47,3 +47,10 @@ def createcourse(request):
         context = alwaysContext(request)
         context["form"] = forms.CreateCourseForm()
         return render(request, "createcourse.html", context)
+
+def removefrompinned(request, course_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    userdata = UserData.objects.get(user=request.user)
+    userdata.pinnedcourses.remove(Course.objects.get(id=course_id))
+    return redirect("forum:index")

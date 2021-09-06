@@ -98,3 +98,15 @@ class Submission(models.Model):
 
     def __str__(self):
         return self.assignment.title + " [submission] id: " + str(self.id)
+
+class UserData(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='userdata_of_user',
+    )
+    pinnedcourses = models.ManyToManyField(
+        Course,
+        related_name='userdata_of_pinnedcourse',
+        blank=True
+    )

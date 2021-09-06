@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('courses/', views_courses.courses, name='courses'),
     path('setcourse/<course_id>', views_courses.setcourse, name='setcourse'),
+    path('removefrompinned/<course_id>', views_courses.removefrompinned, name='removefrompinned'),
     path('createcourse/', views_courses.createcourse, name='createcourse'),
 
     path('assignments/', views_assignments.assignments, name='assignments'),

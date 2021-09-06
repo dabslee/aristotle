@@ -1,6 +1,6 @@
 from forum.views_folder.utilities import alwaysContext
 from django.shortcuts import render, redirect
-from ..models import Assignment
+from ..models import Assignment, Course, UserData
 from django.db.models import Q
 import datetime
 
@@ -16,5 +16,17 @@ def index(request):
         & Q(end_datetime__lte=str(datetime.datetime.now() + datetime.timedelta(days=7)))
     ).exclude(
         end_datetime__isnull=True
+    )
+    context["courses"] = Course.objects.filter(
+        Q(owner=request.user)
+        | Q(students=request.user)
+    )
+    if request.method == "POST":
+        pincourseid = int(request.POST["pinselect"])
+        print(request.user.id)
+        userdata = UserData.objects.get(user=request.user)
+        userdata.pinnedcourses.add(Course.objects.get(id=pincourseid))
+    context["pinnedcourses"] = Course.objects.filter(
+        Q(userdata_of_pinnedcourse__user = request.user)
     )
     return render(request, "index.html", context)
