@@ -12,8 +12,8 @@ def index(request):
     context["assignments"] = Assignment.objects.filter(
         Q(course__owner=request.user)
         | Q(course__students=request.user)
-        & Q(end_datetime__gte=str(datetime.datetime.now()))
-        & Q(end_datetime__lte=str(datetime.datetime.now() + datetime.timedelta(days=7)))
+    ).filter(
+        end_datetime__range=[str(datetime.datetime.now()), str(datetime.datetime.now() + datetime.timedelta(days=7))]
     ).exclude(
         end_datetime__isnull=True
     )

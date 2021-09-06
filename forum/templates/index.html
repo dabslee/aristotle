@@ -53,6 +53,9 @@ Home
                     <span>{{assn.end_datetime}}</span>
                 </a>
                 {% endfor %}
+                {% if assignments|length == 0 %}
+                <span>No assignments due in the next 7 days!</span>
+                {% endif %}
             </div>
         </div>
         <div class="card mt-3">
