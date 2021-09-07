@@ -32,15 +32,27 @@ def modules(request):
 def createmodule(request):
     if not request.user.is_authenticated:
         return redirect('home')
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    if request.user != course.owner:
+        return redirect('forum:modules')
     if request.method == 'POST':
         form = forms.CreateModuleForm(request.POST)
         if form.is_valid():
             AssignmentModule.objects.create(
                 name=form.cleaned_data['name'],
-                course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+                course = course
             )
             return redirect("forum:modules")
     else:
         context = alwaysContext(request)
         context["form"] = forms.CreateModuleForm()
         return render(request, "createmodule.html", context)
+
+def deletemodule(request, module_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+    if request.user != course.owner:
+        return redirect('forum:modules')
+    AssignmentModule.objects.get(id=module_id).delete()
+    return redirect("forum:modules")

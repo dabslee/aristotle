@@ -25,4 +25,5 @@ urlpatterns = [
     
     path('modules/', views_modules.modules, name='modules'),
     path('createmodule/', views_modules.createmodule, name='createmodule'),
+    path('deletemodule/<module_id>', views_modules.deletemodule, name='deletemodule'),
 ]

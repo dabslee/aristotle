@@ -31,7 +31,10 @@ Modules
         <div class="accordion-item">
             <h3 class="accordion-header" id="heading{{module.id}}">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{module.id}}" aria-expanded="true" aria-controls="collapse{{module.id}}">
-                    {{module.name}}
+                    <span>{{module.name}}</span>
+                    {% if selected_course.owner == request.user and module.id != 0 %}
+                    <a onclick="if (confirm('Are you sure you want to delete \'{{module.name}}\'?')){location.href='{% url 'forum:deletemodule' module.id %}'}" class="bi bi-trash ms-4 link-secondary"></a>
+                    {% endif %}
                 </button>
             </h3>
             <div id="collapse{{module.id}}" class="accordion-collapse collapse show" aria-labelledby="heading{{module.id}}">
