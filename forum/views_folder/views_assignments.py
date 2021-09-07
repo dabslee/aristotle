@@ -61,7 +61,7 @@ def assignments(request):
     context = alwaysContext(request)
     course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
     selected_assignments = Assignment.objects.filter(course=course).order_by("end_datetime")
-    if request.method == "POST":
+    if request.method == "POST" and "modulefilter" in request.POST:
         selected_assignments = Assignment.objects.filter(course=course, module_id=request.POST["modulefilter"]).order_by("end_datetime")
     if (course.owner == request.user):
         context["modules"] = AssignmentModule.objects.filter(course=course)

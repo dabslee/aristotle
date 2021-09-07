@@ -16,6 +16,7 @@
     <div class="card bg-light">
         <div class="card-body">
             <label>Filter by module: <select name="modulefilter" class="form-select">
+                <option disabled>Select module</option>
                 {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
             </select></label>
             <input class="btn btn-primary" type="submit" value="Submit">
