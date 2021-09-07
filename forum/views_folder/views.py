@@ -21,7 +21,7 @@ def index(request):
         Q(owner=request.user)
         | Q(students=request.user)
     )
-    if request.method == "POST":
+    if request.method == "POST" and "pinselect" in request.POST:
         pincourseid = int(request.POST["pinselect"])
         print(request.user.id)
         userdata = UserData.objects.get(user=request.user)
