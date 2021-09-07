@@ -60,7 +60,7 @@ class Assignment(models.Model):
     description = QuillField()
     total_points = models.FloatField(null=True, blank=True)
     class Meta:
-        ordering = ['end_datetime']
+        ordering = ['end_datetime', 'title']
     
     def __str__(self):
         return self.title

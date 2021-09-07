@@ -25,7 +25,7 @@ def modules(request):
                     assn.module = AssignmentModule.objects.get(id=moduleid)
                 assn.save()
     context["modules"] = [ModuleWrapper("No module", 0, Assignment.objects.filter(course=course, module=None))]
-    for module in AssignmentModule.objects.filter(course=course):
+    for module in AssignmentModule.objects.filter(course=course).order_by("name"):
         context["modules"].append(ModuleWrapper(module.name, module.id, Assignment.objects.filter(course=course, module=module).order_by("end_datetime")))
     return render(request, "modules.html", context)
 

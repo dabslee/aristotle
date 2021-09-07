@@ -22,7 +22,7 @@ def courses(request):
                 return redirect("forum:courses")
         else:
             context["error"] = "Course not found."
-    context["courses"] = Course.objects.filter(Q(owner=request.user) | Q(students=request.user)).distinct()
+    context["courses"] = Course.objects.filter(Q(owner=request.user) | Q(students=request.user)).distinct().order_by("name")
     context["form"] = forms.JoinCourseForm()
     return render(request, "courses.html", context)
 
