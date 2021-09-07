@@ -10,6 +10,6 @@ Create Course
 <form action="{% url 'forum:createcourse' %}" method="post" class="form">
     {% csrf_token %}
     {{form|crispy}}
-    <input type="submit" value="Submit" class="btn btn-primary mt-2">
+    <input type="submit" value="Submit" class="btn btn-primary mt-3">
 </form>
 {% endblock %}
