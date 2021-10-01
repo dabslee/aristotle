@@ -29,7 +29,7 @@ def newsubmission(request, assignment_id):
         context["form"] = forms.NewSubmission()
         return render(request, "newsubmission.html", context)
 
-def viewsubmission(request, assignment_id=None, student_id=None):
+def viewsubmission(request, assignment_id, student_id):
     if not request.user.is_authenticated:
         return redirect('home')
     context = alwaysContext(request)
