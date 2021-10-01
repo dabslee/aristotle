@@ -10,8 +10,8 @@ def dateConvert(date_in):
     except ValueError:
         return None
 
-def alwaysContext(request):
+def alwaysContext(request, course_id):
     return {
         "username": request.user.username,
-        "selected_course": Course.objects.filter(id=request.session.get('selected_course_id')).first()
+        "selected_course": Course.objects.filter(uuid=course_id).first()
     }

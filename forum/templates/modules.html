@@ -7,7 +7,7 @@ Modules
 
 {% block content %}
 <h2>Modules</h2>
-<form method="POST" action="{% url 'forum:modules' %}">
+<form method="POST" action="{% url 'forum:modules' course_id=selected_course.uuid %}">
     {% csrf_token %}
     {% if selected_course.owner == request.user %}
     <div class="mb-3" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
@@ -22,7 +22,7 @@ Modules
             </div>
         </div>
 
-        <a href="{% url 'forum:createmodule' %}"><div class="btn btn-primary">+ New module</div></a>
+        <a href="{% url 'forum:createmodule' course_id=selected_course.uuid %}"><div class="btn btn-primary">+ New module</div></a>
     </div>
     {% endif %}
 
@@ -33,7 +33,7 @@ Modules
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{module.id}}" aria-expanded="true" aria-controls="collapse{{module.id}}">
                     <span>{{module.name}}</span>
                     {% if selected_course.owner == request.user and module.id != 0 %}
-                    <a onclick="if (confirm('Are you sure you want to delete \'{{module.name}}\'?')){location.href='{% url 'forum:deletemodule' module.id %}'}" class="bi bi-trash ms-4 link-secondary"></a>
+                    <a onclick="if (confirm('Are you sure you want to delete \'{{module.name}}\'?')){location.href='{% url 'forum:deletemodule' course_id=selected_course.uuid module_id=module.id %}'}" class="bi bi-trash ms-4 link-secondary"></a>
                     {% endif %}
                 </button>
             </h3>
@@ -48,7 +48,7 @@ Modules
                             {% if selected_course.owner == request.user %}
                             <input name="assignment-checkbox-{{assn.id}}" class="form-check-input me-3" type="checkbox" value="checked">
                             {% endif %}
-                            <a href='{% url 'forum:assignmentdetails' assn.id %}' style="flex: 1 2 auto">
+                            <a href='{% url 'forum:assignmentdetails' course_id=selected_course.uuid assignment_id=assn.id %}' style="flex: 1 2 auto">
                                 <div class="cutebox" style="background-color: var(--main-background-overlay); display: flex; flex-direction: row; justify-content: space-between;">
                                     <span>{{assn.title}}</span>
                                     <span>Due: {{assn.end_datetime}}</span>

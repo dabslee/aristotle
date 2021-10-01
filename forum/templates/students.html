@@ -15,7 +15,7 @@ Students
         {% if students|length > 0 %}<p>The students in <b>{{selected_course.name}}</b>. Click on the student to view their grades.</p>{% else %}<p>No students yet!</p>{% endif %}
         <div class="list-group mb-3">
             {% for student in students %}
-            <a href="{% url 'forum:studentgrades' student.id %}" class="list-group-item list-group-item-action">
+            <a href="{% url 'forum:studentgrades' course_id=selected_course.uuid student_id=student.id %}" class="list-group-item list-group-item-action">
                 {{student.username}}
             </a>
             {% endfor %}

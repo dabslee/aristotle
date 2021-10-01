@@ -35,7 +35,7 @@ class TeacherAssignmentRow():
         self.start_datetime = assignment.start_datetime
         self.end_datetime = assignment.end_datetime
         self.submitted = 0
-        course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+        course = assignment.course
         for student in User.objects.filter(course_of_student=course):
             if Grade.objects.filter(student=student, assignment=assignment).exclude(earned_points=None, feedback=None).count() > 0 or Submission.objects.filter(student=student, assignment=assignment).count() > 0:
                 self.submitted += 1
@@ -55,30 +55,28 @@ def gradeRender(student, request, context, course, selected_assignments):
     context["cum_den"] = cum_den
     context["assignments"] = assignments
     return render(request, "assignments_student.html", context)
-def assignments(request):
+def assignments(request, course_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    context = alwaysContext(request)
-    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    selected_assignments = Assignment.objects.filter(course=course).order_by("end_datetime", "title")
+    context = alwaysContext(request, course_id)
+    selected_assignments = Assignment.objects.filter(course=context["selected_course"]).order_by("end_datetime", "title")
     if request.method == "POST" and "modulefilter" in request.POST:
-        selected_assignments = Assignment.objects.filter(course=course, module_id=request.POST["modulefilter"]).order_by("end_datetime", "title")
-    if (course.owner == request.user):
-        context["modules"] = AssignmentModule.objects.filter(course=course)
+        selected_assignments = Assignment.objects.filter(course=context["selected_course"], module_id=request.POST["modulefilter"]).order_by("end_datetime", "title")
+    if (context["selected_course"].owner == request.user):
+        context["modules"] = AssignmentModule.objects.filter(course=context["selected_course"])
         context["assignments"] = []
         for assignment in selected_assignments:
             context["assignments"].append(TeacherAssignmentRow(assignment, request))
         return render(request, "assignments_teacher.html", context)
     else:
         context["page_title"] = "Assignments"
-        return gradeRender(request.user, request, context, course, selected_assignments)
+        return gradeRender(request.user, request, context, context["selected_course"], selected_assignments)
 
-def newassignment(request):
+def newassignment(request, course_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    context = alwaysContext(request)
-    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    if (course.owner != request.user):
+    context = alwaysContext(request, course_id)
+    if (context["selected_course"].owner != request.user):
         return redirect('home')
     if request.method == "POST":
         form = forms.CreateAssignmentForm(request.POST)
@@ -89,20 +87,20 @@ def newassignment(request):
                 end_datetime=form.cleaned_data['end_datetime'],
                 description=form.cleaned_data['description'],
                 total_points=form.cleaned_data['total_points'],
-                course=course,
-                module=AssignmentModule.objects.filter(name=form.cleaned_data['module'], course=course).first(),
+                course=context["selected_course"],
+                module=AssignmentModule.objects.filter(name=form.cleaned_data['module'], course=context["selected_course"]).first(),
             )
-            return HttpResponseRedirect(reverse("forum:assignments"))
+            return HttpResponseRedirect(reverse("forum:assignments", kwargs={"course_id" : course_id}))
     else:
-        context["modules"] = [module.name for module in AssignmentModule.objects.filter(course=course)]
+        context["modules"] = [module.name for module in AssignmentModule.objects.filter(course=context["selected_course"])]
         context["form"] = forms.CreateAssignmentForm()
         return render(request, "newassignment.html", context)
 
-def delete_assignment(request, assignment_id):
+def delete_assignment(request, course_id, assignment_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    if (course.owner != request.user):
+    context = alwaysContext(request, course_id)
+    if (context["selected_course"].owner != request.user):
         return redirect('home')
     Assignment.objects.filter(id=assignment_id).delete()
     return redirect('forum:assignments')
@@ -125,14 +123,13 @@ class SubmissionRow():
         else:
             self.grade = "--"
             self.percentgrade = "--"
-        self.link = reverse("forum:viewsubmission", kwargs={"assignment_id":assignment.id, "student_id":student.id})
-def assignmentdetails(request, assignment_id):
+        self.link = reverse("forum:viewsubmission", kwargs={"course_id":assignment.course.uuid, "assignment_id":assignment.id, "student_id":student.id})
+def assignmentdetails(request, course_id, assignment_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    context = alwaysContext(request)
+    context = alwaysContext(request, course_id)
     assignment = Assignment.objects.get(id=assignment_id)
-    course = Course.objects.get(id=request.session.get('selected_course_id'))
-    if course != assignment.course:
+    if context["selected_course"] != assignment.course:
         return redirect('home')
 
     if request.method == "POST":
@@ -146,8 +143,8 @@ def assignmentdetails(request, assignment_id):
             assignment.end_datetime=form.cleaned_data['end_datetime']
             assignment.description=form.cleaned_data['description']
             assignment.total_points=form.cleaned_data['total_points']
-            assignment.course=course
-            assignment.module=AssignmentModule.objects.filter(name=form.cleaned_data['module'], course=course).first()
+            assignment.course=context["selected_course"]
+            assignment.module=AssignmentModule.objects.filter(name=form.cleaned_data['module'], course=context["selected_course"]).first()
             assignment.save()
             context["savedmessage"] = "Changes saved."
         else:
@@ -155,12 +152,11 @@ def assignmentdetails(request, assignment_id):
     
     context["assignment"] = assignment
     context["modulename"] = assignment.module.name if assignment.module else "No module"
-    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    if (course.owner == request.user):
+    if (context["selected_course"].owner == request.user):
         context["students"] = []
-        for student in User.objects.filter(course_of_student=course):
+        for student in User.objects.filter(course_of_student=context["selected_course"]):
             context["students"].append(SubmissionRow(student, assignment))
-        context["modules"] = [module.name for module in AssignmentModule.objects.filter(course=course)]
+        context["modules"] = [module.name for module in AssignmentModule.objects.filter(course=context["selected_course"])]
         context["form"] = forms.CreateAssignmentForm(initial={
             "title" : assignment.title,
             "start_datetime" : assignment.start_datetime,

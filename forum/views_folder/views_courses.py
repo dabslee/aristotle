@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
+from django.urls import reverse
 from django.db.models import Q
 
 from ..models import Course, UserData
@@ -6,10 +7,10 @@ from .. import forms
 
 from .utilities import alwaysContext
 
-def courses(request):
+def courses(request, course_id=None):
     if not request.user.is_authenticated:
         return redirect('home')
-    context = alwaysContext(request)
+    context = alwaysContext(request, course_id)
     if request.method == 'POST':
         form = forms.JoinCourseForm(request.POST)
         if form.is_valid():
@@ -29,8 +30,7 @@ def courses(request):
 def setcourse(request, course_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    request.session['selected_course_id'] = course_id
-    return redirect("forum:courses")
+    return redirect(reverse("forum:courses", kwargs={'course_id' : course_id}))
 
 def createcourse(request):
     if not request.user.is_authenticated:
@@ -44,7 +44,7 @@ def createcourse(request):
             )
             return redirect("forum:courses")
     else:
-        context = alwaysContext(request)
+        context = alwaysContext(request, course_id=None)
         context["form"] = forms.CreateCourseForm()
         return render(request, "createcourse.html", context)
 
@@ -52,5 +52,5 @@ def removefrompinned(request, course_id):
     if not request.user.is_authenticated:
         return redirect('home')
     userdata = UserData.objects.get(user=request.user)
-    userdata.pinnedcourses.remove(Course.objects.get(id=course_id))
+    userdata.pinnedcourses.remove(Course.objects.get(uuid=course_id))
     return redirect("forum:index")

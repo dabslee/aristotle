@@ -10,13 +10,12 @@ class ModuleWrapper():
         self.name = name
         self.id = id
         self.assignments = assignments
-def modules(request):
+def modules(request, course_id):
     if not request.user.is_authenticated:
-        return redirect('home')        
-    context = alwaysContext(request)
-    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
+        return redirect('home')
+    context = alwaysContext(request, course_id)
     if request.method == "POST":
-        for assn in Assignment.objects.filter(course=course):
+        for assn in Assignment.objects.filter(course=context["selected_course"]):
             if request.POST.get(f"assignment-checkbox-{assn.id}") == "checked":
                 moduleid = int(request.POST.get("moduleassign"))
                 if moduleid == 0:
@@ -24,35 +23,34 @@ def modules(request):
                 else:
                     assn.module = AssignmentModule.objects.get(id=moduleid)
                 assn.save()
-    context["modules"] = [ModuleWrapper("No module", 0, Assignment.objects.filter(course=course, module=None))]
-    for module in AssignmentModule.objects.filter(course=course).order_by("name"):
-        context["modules"].append(ModuleWrapper(module.name, module.id, Assignment.objects.filter(course=course, module=module).order_by("end_datetime")))
+    context["modules"] = [ModuleWrapper("No module", 0, Assignment.objects.filter(course=context["selected_course"], module=None))]
+    for module in AssignmentModule.objects.filter(course=context["selected_course"]).order_by("name"):
+        context["modules"].append(ModuleWrapper(module.name, module.id, Assignment.objects.filter(course=context["selected_course"], module=module).order_by("end_datetime")))
     return render(request, "modules.html", context)
 
-def createmodule(request):
+def createmodule(request, course_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    if request.user != course.owner:
+    context = alwaysContext(request, course_id)
+    if request.user != context["selected_course"].owner:
         return redirect('forum:modules')
     if request.method == 'POST':
         form = forms.CreateModuleForm(request.POST)
         if form.is_valid():
             AssignmentModule.objects.create(
                 name=form.cleaned_data['name'],
-                course = course
+                course = context["selected_course"]
             )
             return redirect("forum:modules")
     else:
-        context = alwaysContext(request)
         context["form"] = forms.CreateModuleForm()
         return render(request, "createmodule.html", context)
 
-def deletemodule(request, module_id):
+def deletemodule(request, course_id, module_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    course = Course.objects.filter(id=request.session.get('selected_course_id')).first()
-    if request.user != course.owner:
+    context = alwaysContext(request, course_id)
+    if request.user != context["selected_course"].owner:
         return redirect('forum:modules')
     AssignmentModule.objects.get(id=module_id).delete()
     return redirect("forum:modules")

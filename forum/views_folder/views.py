@@ -5,10 +5,10 @@ from django.db.models import Q
 import datetime
 
 # Create your views here.
-def index(request):
+def index(request, course_id=None):
     if not request.user.is_authenticated:
         return redirect('home')
-    context = alwaysContext(request)
+    context = alwaysContext(request, course_id)
     context["assignments"] = Assignment.objects.filter(
         Q(course__owner=request.user)
         | Q(course__students=request.user)

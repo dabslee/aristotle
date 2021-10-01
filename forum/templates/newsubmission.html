@@ -24,7 +24,7 @@ New Submission
         <style>.card-body p {margin: 0}</style>
     </div>
 </div>
-<form action="{% url 'forum:newsubmission' assignment.id %}" method="post">
+<form action="{% url 'forum:newsubmission' course_id=selected_course.uuid assignment_id=assignment.id %}" method="post">
     {% csrf_token %}
     <h3>Text submission:</h3>
     {{form.details}}

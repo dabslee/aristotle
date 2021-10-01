@@ -21,7 +21,7 @@ View Submission
 </div>
 {% endfor %}
 <h2>Grade and Feedback</h2>
-<form action="{% url 'forum:viewsubmission' assignment_id=assignment.id student_id=student.id %}" method="POST">
+<form action="{% url 'forum:viewsubmission' course_id=selected_course.uuid assignment_id=assignment.id student_id=student.id %}" method="POST">
     {% csrf_token %}
     <label class="form-label">Grade: </label>
     <div class="input-group" style="width: 200px">

@@ -26,7 +26,7 @@ Assignment Details: {{assignment.title}}
 </div>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     <h3>Submissions:</h3>
-    <a href="{% url 'forum:newsubmission' assignment.id %}"><div class="btn btn-primary mb-2">+ New submission</div></a>
+    <a href="{% url 'forum:newsubmission' course_id=selected_course.uuid assignment_id=assignment.id %}"><div class="btn btn-primary mb-2">+ New submission</div></a>
 </div>
 {% if submissions|length == 0 %}
 No submissions yet!

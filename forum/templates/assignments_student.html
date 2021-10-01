@@ -37,7 +37,7 @@
     </thead>
     <tbody>
     {% for assignment in assignments %}
-        <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor: pointer">
+        <tr onclick="location.href='{% url 'forum:assignmentdetails' course_id=selected_course.uuid assignment_id=assignment.id %}'" style="cursor: pointer">
             <td>{{assignment.title}}</td>
             <td>{% if assignment.start_datetime %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
             <td>{% if assignment.end_datetime %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>

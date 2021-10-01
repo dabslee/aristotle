@@ -48,7 +48,7 @@ Home
             <div class="card-header">Upcoming assignments (next 7 days)</div>
             <div class="card-body" style="padding: 15px 30px">
                 {% for assn in assignments %}
-                <a href="{% url 'forum:assignmentdetails' assn.id %}" class="item">
+                <a href="{% url 'forum:assignmentdetails' course_id=course.id assignment_id=assn.id %}" class="item">
                     <span>{{assn.title}}</span>
                     <span>{{assn.end_datetime}}</span>
                 </a>
@@ -63,14 +63,18 @@ Home
             <div class="card-body" style="padding: 15px 30px">
                 {% for course in pinnedcourses %}
                 <div class="item">
-                    <a href="{% url 'forum:setcourse' course.id %}">{{course.name}}</span>
-                    <a href="{% url 'forum:removefrompinned' course.id %}"><i class="bi bi-x link-secondary"></i></a>
+                    <a href="{% url 'forum:setcourse' course_id=course.uuid %}">{{course.name}}</span>
+                    <a href="{% url 'forum:removefrompinned' course_id=course.uuid %}"><i class="bi bi-x link-secondary"></i></a>
                 </div>
                 {% endfor %}
                 {% if pinnedcourses|length == 0 %}
                 <p>No pinned courses yet!</p>
                 {% endif %}
-                <form action="{% url 'forum:index' %}" method="post" style="display: flex; flex-direction: row; align-items: center; justify-content: center;" class="mt-2">
+                <form
+                {% if course.id %}action="{% url 'forum:index' course_id=selected_course.uuid %}"{% else %}action="{% url 'forum:index' %}"{% endif %}
+                method="post"
+                style="display: flex; flex-direction: row; align-items: center; justify-content: center;"
+                class="mt-2">
                     {% csrf_token %}
                     <select name="pinselect" class="form-select form-select-sm me-2" style="flex: 2 2 auto">
                         <option value="" disabled selected>Select a course</option>

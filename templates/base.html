@@ -20,7 +20,11 @@
     <body>
         <div id=pagehead>
             <div style="display:flex; flex-direction: row; align-items: center;">
-                <a href="{% url 'home' %}" style="color: white; font-weight: 500;">aristotle°</a>
+                {% if selected_course.uuid %}
+                <a href="{% url 'forum:index' course_id=selected_course.uuid %}" style="color: white; font-weight: 500;">aristotle°</a>
+                {% else %}
+                <a href="{% url 'forum:index' %}" style="color: white; font-weight: 500;">aristotle°</a>
+                {% endif %}
             </div>
             <div style="font-weight: normal">
                 {{selected_course.name}}
@@ -30,12 +34,22 @@
             {% if username %}
             <div id="navbar">
                 <ul>
-                    <a href="{% url 'home' %}"><li>Home</li></a>
+                    {% if selected_course.uuid %}
+                    <a href="{% url 'forum:index' course_id=selected_course.uuid %}"><li>Home</li></a>
+                    {% else %}
+                    <a href="{% url 'forum:index' %}"><li>Home</li></a>
+                    {% endif %}
+
+                    {% if selected_course.uuid %}
+                    <a href="{% url 'forum:courses' course_id=selected_course.uuid %}"><li>Courses</li></a>
+                    {% else %}
                     <a href="{% url 'forum:courses' %}"><li>Courses</li></a>
+                    {% endif %}
+
                     {% if selected_course %}
-                    {% if selected_course.owner == request.user %}<a href="{% url 'forum:students' %}"><li>Students</li></a>{% endif %}
-                    <a href="{% url 'forum:modules' %}"><li>Modules</li></a>
-                    <a href="{% url 'forum:assignments' %}"><li>Assignments</li></a>
+                    {% if selected_course.owner == request.user %}<a href="{% url 'forum:students' course_id=selected_course.uuid %}"><li>Students</li></a>{% endif %}
+                    <a href="{% url 'forum:modules' course_id=selected_course.uuid %}"><li>Modules</li></a>
+                    <a href="{% url 'forum:assignments' course_id=selected_course.uuid %}"><li>Assignments</li></a>
                     {% endif %}
                 </ul>
                 <ul>
@@ -51,7 +65,13 @@
         </div>
         <div id="pagefoot">
             <span>Unsafe release.<br><a href="http://brandonssandbox.com" style="color:var(--always-white); text-decoration: underline;">Brandon Lee</a>, &#169; 2021.</span>
-            <a href="{% url 'home' %}" style="font-size: xx-large; font-weight: 500; color: white">aristotle°</a>
+            
+            {% if selected_course.uuid %}
+            <a href="{% url 'forum:index' course_id=selected_course.uuid %}" style="font-size: xx-large; font-weight: 500; color: white">aristotle°</a>
+            {% else %}
+            <a href="{% url 'forum:index' %}" style="font-size: xx-large; font-weight: 500; color: white">aristotle°</a>
+            {% endif %}
+
             <div>
                 <div style="text-align: right;">
                     <a href="https://github.com/dabslee/aristotle/issues" style="color:var(--always-white); text-decoration: underline;">Report an issue</a>

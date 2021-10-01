@@ -9,9 +9,9 @@ Assignments
 <h2>Assignments</h2>
 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     {% if assignments|length > 0 %}<p>The assignments in <b>{{selected_course.name}}</b>.</p>{% else %}<p>No assignments yet!</p>{% endif %}
-    <a href="{% url 'forum:newassignment' %}"><div class="btn btn-primary mb-3">+ New assignment</div></a>
+    <a href="{% url 'forum:newassignment' course_id=selected_course.uuid %}"><div class="btn btn-primary mb-3">+ New assignment</div></a>
 </div>
-<form method="POST" action="{% url 'forum:assignments' %}">
+<form method="POST" action="{% url 'forum:assignments' course_id=selected_course.uuid %}">
     {% csrf_token %}
     <div class="card bg-light">
         <div class="card-body">
@@ -20,7 +20,7 @@ Assignments
                 {% for module in modules %}<option value="{{module.id}}">{{module.name}}</option>{% endfor %}
             </select></label>
             <input class="btn btn-primary" type="submit" value="Submit">
-            <a href="{% url 'forum:assignments' %}"><div class="btn btn-danger" style="background-color: var(--button-red);">Clear</div></a>
+            <a href="{% url 'forum:assignments' course_id=selected_course.uuid %}"><div class="btn btn-danger" style="background-color: var(--button-red);">Clear</div></a>
         </div>
     </div>
 </form>
@@ -36,7 +36,7 @@ Assignments
     </thead>
     <tbody>
         {% for assignment in assignments %}
-        <tr onclick="location.href='{% url 'forum:assignmentdetails' assignment.id %}'" style="cursor:pointer">
+        <tr onclick="location.href='{% url 'forum:assignmentdetails' course_id=selected_course.uuid assignment_id=assignment.id %}'" style="cursor:pointer">
             <td>{{assignment.title}}</td>
             <td>{% if assignment.start_datetime != None %}{{assignment.start_datetime}}{% else %}--{% endif %}</td>
             <td>{% if assignment.end_datetime != None %}{{assignment.end_datetime}}{% else %}--{% endif %}</td>

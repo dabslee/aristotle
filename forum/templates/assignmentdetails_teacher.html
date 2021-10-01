@@ -6,7 +6,7 @@ Assignment Details: {{assignment.title}}
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'forum:assignmentdetails' assignment.id %}" method="POST">
+<form action="{% url 'forum:assignmentdetails' course_id=selected_course.uuid assignment_id=assignment.id %}" method="POST">
     {% csrf_token %}
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <div>
@@ -64,7 +64,7 @@ Assignment Details: {{assignment.title}}
         <script>
             function delete_assn() {
                 if (confirm("Are you sure you want to delete this assignment?")) {
-                    location.href = "{% url 'forum:delete_assignment' assignment.id %}";
+                    location.href = "{% url 'forum:delete_assignment' course_id=selected_course.uuid assignment_id=assignment.id %}";
                 }
             }
         </script>

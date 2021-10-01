@@ -6,7 +6,7 @@ New Assignment
 
 {% block content %}
 <h2>Create a new assignment</h2>
-<form action="{% url 'forum:newassignment' %}" method="post" style="max-width: 800px;">
+<form action="{% url 'forum:newassignment' course_id=selected_course.uuid %}" method="post" style="max-width: 800px;">
     {% csrf_token %}
     <div class="form-group">
         <label for="title">Title:</label>
