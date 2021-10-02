@@ -48,7 +48,7 @@ Home
             <div class="card-header">Upcoming assignments (next 7 days)</div>
             <div class="card-body" style="padding: 15px 30px">
                 {% for assn in assignments %}
-                <a href="{% url 'forum:assignmentdetails' course_id=course.id assignment_id=assn.id %}" class="item">
+                <a href="{% url 'forum:assignmentdetails' course_id=selected_course.uuid assignment_id=assn.id %}" class="item">
                     <span>{{assn.title}}</span>
                     <span>{{assn.end_datetime}}</span>
                 </a>
